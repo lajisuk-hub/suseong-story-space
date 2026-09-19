@@ -192,9 +192,9 @@ button { font: inherit; color: inherit; border: 0; background: none; cursor: poi
 @keyframes twinkle { from { opacity: .45; } to { opacity: 1; } }
 .inv-float { position: absolute; width: 23%; max-width: 150px; aspect-ratio: 3/4; object-fit: cover; border-radius: 4px 9px 9px 4px;
   box-shadow: 0 0 0 2px rgba(255,255,255,.85), 0 0 26px 6px rgba(255,236,170,.8), 0 0 60px 12px rgba(190,140,255,.55), 0 14px 26px rgba(20,5,70,.5); animation: drift 6s ease-in-out infinite alternate; }
-.inv-float.f1 { left: 7%; top: 30%; --r: -8deg; }
-.inv-float.f2 { right: 7%; top: 27%; --r: 7deg; width: 19%; animation-duration: 7.5s; animation-delay: -2s; }
-.inv-float.f3 { left: 41%; top: 39%; --r: -3deg; width: 15%; animation-duration: 5.2s; animation-delay: -1s; }
+.inv-float.f1 { left: 7%; top: 24%; --r: -8deg; }
+.inv-float.f2 { right: 7%; top: 21%; --r: 7deg; width: 19%; animation-duration: 7.5s; animation-delay: -2s; }
+.inv-float.f3 { left: 42%; top: 30%; --r: -3deg; width: 15%; animation-duration: 5.2s; animation-delay: -1s; }
 @keyframes drift { from { transform: translateY(-9px) rotate(var(--r)); } to { transform: translateY(10px) rotate(calc(var(--r) + 4deg)); } }
 .inv-cover-text { position: relative; padding: 0 22px 70px; animation: coverIn 1.4s ease both; }
 @keyframes coverIn { from { opacity: 0; transform: translateY(24px); } }
