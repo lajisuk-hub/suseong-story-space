@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { DEFAULT_BOOKS } from "../../data/books";
-import { loadBooks, saveBooks, loadReviews, setReviewHidden, uploadPage } from "../../lib/supabase";
+import { loadBooks, saveBooks, loadReviews, setReviewHidden, uploadPage, loadRsvps } from "../../lib/supabase";
 
 const PASSWORD = "1234";
 
@@ -36,6 +36,7 @@ export default function Admin() {
   const [pw, setPw] = useState("");
   const [books, setBooks] = useState(null);
   const [reviews, setReviews] = useState([]);
+  const [rsvps, setRsvps] = useState([]);
   const [msg, setMsg] = useState("");
   const [busy, setBusy] = useState("");
   const [origin, setOrigin] = useState("");
@@ -51,6 +52,7 @@ export default function Admin() {
     if (!ok) return;
     loadBooks().then((b) => setBooks(b && b.length ? b : DEFAULT_BOOKS));
     refreshReviews();
+    loadRsvps().then(setRsvps).catch(() => {});
   }, [ok]);
 
   if (!ok) {
@@ -131,6 +133,7 @@ export default function Admin() {
         <h1>동화책 우주 전시관 관리</h1>
         <div className="links">
           <span>📱 참여자용 주소: <a href="/" target="_blank">{origin}/</a></span>
+          <span>💌 모바일 초대장: <a href="/invite" target="_blank">{origin}/invite</a></span>
           <span>🖥 행사장 큰 화면용(QR 포함): <a href="/show" target="_blank">{origin}/show</a> — 열고 나서 F11을 누르면 화면 가득 찹니다</span>
         </div>
 
@@ -182,6 +185,21 @@ export default function Admin() {
               </tr>
             ))}
             {!reviews.length && <tr><td>아직 후기가 없어요.</td></tr>}
+          </tbody>
+        </table>
+
+        <h2>3. 초대장 참석 회신 (참석 {rsvps.filter((r) => r.attend === "yes").reduce((a, r) => a + (Number(r.count) || 1), 0)}명 · 불참 {rsvps.filter((r) => r.attend === "no").length}건)</h2>
+        <table>
+          <tbody>
+            {rsvps.map((r) => (
+              <tr key={r.id}>
+                <td>{r.name}</td>
+                <td style={{ color: "#8d7cc0" }}>{r.org}</td>
+                <td>{r.attend === "yes" ? `참석 ${r.count}명` : "불참"}</td>
+                <td style={{ color: "#8d7cc0", fontSize: 12, whiteSpace: "nowrap" }}>{new Date(r.at).toLocaleString("ko-KR", { month: "numeric", day: "numeric", hour: "2-digit", minute: "2-digit" })}</td>
+              </tr>
+            ))}
+            {!rsvps.length && <tr><td>아직 회신이 없어요.</td></tr>}
           </tbody>
         </table>
       </div>

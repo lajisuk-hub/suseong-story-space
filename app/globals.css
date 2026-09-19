@@ -175,3 +175,84 @@ button { font: inherit; color: inherit; border: 0; background: none; cursor: poi
 @media (prefers-reduced-motion: reduce) {
   .guide, .v-pages.next, .v-pages.prev { animation: none; }
 }
+
+/* ── 모바일 초대장 (/invite) ───────────────── */
+.inv { min-height: 100vh; color: #fff; overflow-x: hidden;
+  background: linear-gradient(180deg, #1e0a54 0%, #2f1672 30%, #4a2490 62%, #2a1268 100%); }
+.inv > * { max-width: 520px; margin-left: auto; margin-right: auto; }
+.inv h1, .inv h2, .inv-btn, .inv-badge, .inv-line b, .inv-info b { font-family: "Jua", "Pretendard", sans-serif; font-weight: 400; }
+
+.inv-cover { position: relative; height: 100vh; height: 100svh; min-height: 620px; max-width: none; overflow: hidden; display: flex; flex-direction: column; justify-content: flex-end; align-items: center; text-align: center; }
+.inv-sky { position: absolute; inset: 0; background: url(/space1.jpg) 50% 0 / auto 64% no-repeat, #1e0a54; }
+.inv-sky::after { content: ""; position: absolute; inset: 0;
+  background: linear-gradient(180deg, rgba(24,10,70,.35) 0%, rgba(24,10,70,0) 22%, rgba(24,10,70,0) 40%, rgba(30,10,84,.88) 56%, #1e0a54 64%); }
+.inv-stars { position: absolute; inset: 0; opacity: .9; animation: twinkle 3.2s ease-in-out infinite alternate;
+  background-image: radial-gradient(2px 2px at 12% 18%, #fff, transparent), radial-gradient(1.5px 1.5px at 78% 9%, #fff, transparent), radial-gradient(2px 2px at 55% 70%, #ffe9a8, transparent),
+    radial-gradient(1.5px 1.5px at 30% 82%, #fff, transparent), radial-gradient(2px 2px at 88% 62%, #fff, transparent), radial-gradient(1.5px 1.5px at 8% 60%, #ffd6ee, transparent), radial-gradient(2px 2px at 68% 88%, #fff, transparent); }
+@keyframes twinkle { from { opacity: .45; } to { opacity: 1; } }
+.inv-float { position: absolute; width: 23%; max-width: 150px; aspect-ratio: 3/4; object-fit: cover; border-radius: 4px 9px 9px 4px;
+  box-shadow: 0 0 0 2px rgba(255,255,255,.85), 0 0 26px 6px rgba(255,236,170,.8), 0 0 60px 12px rgba(190,140,255,.55), 0 14px 26px rgba(20,5,70,.5); animation: drift 6s ease-in-out infinite alternate; }
+.inv-float.f1 { left: 7%; top: 30%; --r: -8deg; }
+.inv-float.f2 { right: 7%; top: 27%; --r: 7deg; width: 19%; animation-duration: 7.5s; animation-delay: -2s; }
+.inv-float.f3 { left: 41%; top: 43%; --r: -3deg; width: 15%; animation-duration: 5.2s; animation-delay: -1s; }
+@keyframes drift { from { transform: translateY(-9px) rotate(var(--r)); } to { transform: translateY(10px) rotate(calc(var(--r) + 4deg)); } }
+.inv-cover-text { position: relative; padding: 0 22px 84px; animation: coverIn 1.4s ease both; }
+@keyframes coverIn { from { opacity: 0; transform: translateY(24px); } }
+.inv-badge { display: inline-block; font-size: 12px; letter-spacing: .14em; padding: 6px 16px; border-radius: 999px; color: #5a3fb5; background: rgba(255,255,255,.92); }
+.inv h1 { font-size: clamp(27px, 7.6vw, 40px); line-height: 1.25; margin-top: 14px; word-break: keep-all; text-shadow: 0 4px 22px rgba(40,10,110,.9); }
+.inv-lead { margin-top: 12px; font-family: "Gowun Batang", serif; font-size: clamp(15px, 4.3vw, 19px); line-height: 1.6; color: #fff3c4; white-space: pre-line; }
+.inv-when { margin-top: 18px; font-size: 14px; line-height: 1.7; opacity: .92; padding-top: 14px; border-top: 1px solid rgba(255,255,255,.28); display: inline-block; }
+.inv-scroll { position: absolute; bottom: 16px; font-size: 12px; opacity: .8; display: flex; flex-direction: column; align-items: center; animation: bob 1.8s ease-in-out infinite; }
+.inv-scroll i { font-style: normal; font-size: 20px; line-height: .8; }
+
+.inv-sec { padding: 46px 20px 8px; text-align: center; }
+.inv h2 { font-size: 24px; margin-bottom: 18px; }
+.inv h2::after { content: ""; display: block; width: 34px; height: 3px; border-radius: 3px; margin: 10px auto 0; background: linear-gradient(90deg, #ffd76a, #ff9ce0); }
+.inv-card { padding: 28px 22px; border-radius: 24px; color: #33206e; background: linear-gradient(180deg, #fff, #f6efff); box-shadow: 0 18px 50px rgba(15,4,60,.45); }
+.inv-eyebrow { font-size: 13px; letter-spacing: .2em; color: #a98be8; margin-bottom: 16px; }
+.inv-greet { font-family: "Gowun Batang", serif; font-size: 16px; line-height: 2; word-break: keep-all; }
+.inv-from { margin-top: 22px; font-family: "Gowun Batang", serif; font-weight: 700; font-size: 15px; color: #6a4fc4; }
+.inv-info { display: grid; gap: 10px; text-align: left; }
+.inv-info > div { display: grid; grid-template-columns: 44px 1fr; column-gap: 12px; align-items: center; padding: 16px 18px; border-radius: 20px; background: rgba(255,255,255,.12); border: 1px solid rgba(255,255,255,.22); backdrop-filter: blur(6px); }
+.inv-info i { grid-row: span 2; font-style: normal; font-size: 26px; width: 44px; height: 44px; display: grid; place-items: center; border-radius: 14px; background: rgba(255,255,255,.9); }
+.inv-info b { font-size: 14px; color: #ffe9a8; }
+.inv-info span { font-size: 16px; line-height: 1.5; word-break: keep-all; }
+.inv-info small { font-size: 13px; opacity: .8; }
+.inv-line { list-style: none; text-align: left; margin: 0 6px; border-left: 2px dashed rgba(255,255,255,.35); }
+.inv-line li { position: relative; padding: 0 0 22px 22px; }
+.inv-line li::before { content: ""; position: absolute; left: -8px; top: 3px; width: 14px; height: 14px; border-radius: 50%; background: linear-gradient(135deg, #ffd76a, #ff9ce0); box-shadow: 0 0 12px #ffd76a; }
+.inv-line em { font-style: normal; font-size: 13px; color: #ffe9a8; }
+.inv-line b { display: block; font-size: 19px; margin-top: 2px; }
+.inv-line span { font-size: 14px; opacity: .85; }
+.inv-note { font-size: 14px; line-height: 1.7; opacity: .9; }
+.inv-card .inv-note { color: #7a66b8; margin-top: 12px; }
+.inv-books { display: flex; gap: 14px; overflow-x: auto; padding: 22px 6px 10px; justify-content: safe center; scrollbar-width: none; }
+.inv-books figure { flex: none; width: 128px; }
+.inv-books img { width: 100%; aspect-ratio: 3/4; object-fit: cover; border-radius: 4px 9px 9px 4px; box-shadow: 0 0 0 2px rgba(255,255,255,.8), 0 0 22px 4px rgba(255,236,170,.6), 0 12px 22px rgba(15,4,60,.5); }
+.inv-books figcaption { margin-top: 10px; font-size: 14px; line-height: 1.35; }
+.inv-books small { display: block; font-size: 11px; opacity: .75; margin-top: 2px; }
+.inv-btn { display: block; width: 100%; padding: 15px; margin-top: 14px; font-size: 18px; text-align: center; text-decoration: none; border-radius: 16px; color: #fff; }
+.inv-btn.main { background: linear-gradient(135deg, #8a5cf6, #ec6fc1); box-shadow: 0 10px 26px rgba(120,60,220,.5); }
+.inv-btn.kakao { background: #fee500; color: #3a2a00; }
+.inv-btn.naver { background: #03c75a; }
+.inv-btn.ghost { background: rgba(255,255,255,.14); border: 1px solid rgba(255,255,255,.35); }
+.inv-btn:disabled { opacity: .6; }
+.inv-maps { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.inv-maps .inv-btn { font-size: 15px; }
+.inv-place { font-family: "Jua", sans-serif; font-size: 21px; }
+.inv-addr { font-size: 14px; color: #7a66b8; margin-top: 4px; }
+.inv-choice { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 12px; }
+.inv-choice button { padding: 14px 6px; font-size: 16px; border-radius: 14px; color: #5a3fb5; background: #efe7ff; border: 2px solid transparent; }
+.inv-choice button.on { background: #fff; border-color: #8a5cf6; box-shadow: 0 4px 14px rgba(138,92,246,.3); }
+.inv-card input { width: 100%; margin-top: 8px; padding: 14px; font: inherit; font-size: 16px; color: #2a1a5e; border-radius: 14px; border: 2px solid #e1d5ff; outline: none; background: #fff; }
+.inv-card input:focus { border-color: #8a5cf6; }
+.inv-count { display: flex; align-items: center; justify-content: flex-end; gap: 10px; margin-top: 12px; font-size: 14px; color: #6a55ad; }
+.inv-count span { margin-right: auto; }
+.inv-count button { width: 38px; height: 38px; border-radius: 50%; font-size: 20px; background: #efe7ff; color: #5a3fb5; }
+.inv-count b { min-width: 44px; font-size: 17px; color: #33206e; }
+.inv-thanks { font-family: "Gowun Batang", serif; font-size: 17px; line-height: 1.8; word-break: keep-all; }
+.inv-foot { padding: 40px 20px 60px; text-align: center; font-size: 13px; line-height: 1.9; opacity: .92; }
+.inv-foot .inv-btn { margin-bottom: 22px; }
+.rise { opacity: 0; transform: translateY(26px); transition: opacity .9s ease, transform .9s ease; }
+.rise.in { opacity: 1; transform: none; }
+@media (prefers-reduced-motion: reduce) { .rise { opacity: 1; transform: none; } .inv-float, .inv-stars { animation: none; } }
