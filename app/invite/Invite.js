@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import { INVITE as BASE } from "../../data/invite";
 import { DEFAULT_BOOKS } from "../../data/books";
 import { loadBooks, loadInvite } from "../../lib/supabase";
+import Ddubi from "../Ddubi";
 
 // 모바일 초대장: 휴대폰에서 위아래로 넘겨 보는 한 장짜리 페이지
 export default function Invite() {
@@ -64,8 +65,9 @@ export default function Invite() {
         {covers[1] && <img className="inv-float f2" src={covers[1]} alt="" />}
         {covers[2] && <img className="inv-float f3" src={covers[2]} alt="" />}
         <div className="inv-cover-text">
-          <span className="inv-badge">INVITATION · 초대합니다</span>
-          <h1>{INVITE.title}</h1>
+          <span className="inv-badge">INVITATION</span>
+          <p className="inv-hello">초대합니다</p>
+          <h1>{INVITE.title.replace(" 성과보고", "\n성과보고")}</h1>
           <p className="inv-lead">{INVITE.lead}</p>
           <p className="inv-when">{INVITE.date}<br />{INVITE.time} · {INVITE.place}</p>
         </div>
@@ -160,7 +162,10 @@ export default function Invite() {
       <footer className="inv-foot">
         <button className="inv-btn ghost" onClick={share}>💌 초대장 공유하기</button>
         <p>{INVITE.host}</p>
+        <p className="inv-credit">캐릭터 ‘뚜비’ ⓒ 대구광역시 수성구청</p>
       </footer>
+
+      <Ddubi />
 
       {toast && <div className="toast">{toast}</div>}
     </div>
