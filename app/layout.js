@@ -2,10 +2,10 @@ import "./globals.css";
 
 export const metadata = {
   metadataBase: new URL("https://suseong-story-space.vercel.app"),
-  title: "수성구 AI 선도기관 성과전시회",
+  title: "수성구 AI 영유아 선도기관 성과보고 발표회",
   description: "읽고싶은 책을 클릭 후 소감을 남겨주세요!",
   openGraph: {
-    title: "수성구 AI 선도기관 성과전시회",
+    title: "수성구 AI 영유아 선도기관 성과보고 발표회",
     description: "읽고싶은 책을 클릭 후 소감을 남겨주세요!",
     images: ["/space1.jpg"],
   },

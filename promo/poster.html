@@ -32,7 +32,7 @@
   .portrait .bg { background-position: 50% 0; background-size: auto 60%; background-color: #1e0a54; }
   .portrait .head { position: absolute; top: 2.4%; left: 0; right: 0; text-align: center; }
   .portrait .badge { display: inline-block; font-size: 2.1vw; padding: .6vw 2.2vw; border-radius: 999px; background: rgba(255,255,255,.9); color: #5a3fb5; font-weight: 700; letter-spacing: .08em; }
-  .portrait h1 { font-size: 6.9vw; margin-top: .9vw; letter-spacing: .01em; }
+  .portrait h1 { font-size: 6.3vw; line-height: 1.16; margin-top: .6vw; letter-spacing: .01em; }
   .portrait h2 { font-size: 3.4vw; margin-top: .2vw; color: #fff3c4; }
   .portrait .b1 { width: 21vw; left: 8%; top: 25%; transform: rotate(-8deg); }
   .portrait .b2 { width: 17vw; right: 7%; top: 23%; transform: rotate(7deg); }
@@ -50,9 +50,9 @@
 
   /* ── 가로(16:9) ── */
   .landscape .shade { background: linear-gradient(90deg, rgba(24,10,70,.15) 0%, rgba(24,10,70,0) 40%, rgba(30,10,84,.55) 62%, rgba(30,10,84,.88) 100%), linear-gradient(180deg, rgba(24,10,70,.5), rgba(24,10,70,0) 30%); }
-  .landscape .head { position: absolute; top: 5%; left: 4%; width: 58%; }
+  .landscape .head { position: absolute; top: 4%; left: 4%; width: 58%; }
   .landscape .badge { display: inline-block; font-size: 1.15vw; padding: .35vw 1.2vw; border-radius: 999px; background: rgba(255,255,255,.9); color: #5a3fb5; font-weight: 700; letter-spacing: .08em; }
-  .landscape h1 { font-size: 4.3vw; margin-top: .8vw; }
+  .landscape h1 { font-size: 3.9vw; line-height: 1.16; }
   .landscape h2 { font-size: 2.1vw; margin-top: .5vw; color: #fff3c4; }
   .landscape .b1 { width: 12.5vw; left: 4.5%; top: 33%; transform: rotate(-8deg); }
   .landscape .b2 { width: 10.5vw; left: 22%; top: 50%; transform: rotate(7deg); }
@@ -87,8 +87,7 @@
   <div class="poster ${mode}">
     <div class="bg"></div><div class="shade"></div>
     <div class="head">
-      <span class="badge">동화책 우주 전시관</span>
-      <h1 class="jua glow">수성구 AI 선도기관 성과전시회</h1>
+      <h1 class="jua glow">수성구 AI 영유아 선도기관<br>성과보고 발표회</h1>
       <h2 class="jua glow">읽고싶은 책을 클릭 후 소감을 남겨주세요!</h2>
     </div>
     ${words.map((w) => `<div class="word" style="font-size:${w[1]}vw;left:${w[2]}%;top:${w[3]}%;color:${w[4]}">${w[0]}</div>`).join("")}

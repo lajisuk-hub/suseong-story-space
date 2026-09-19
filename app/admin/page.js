@@ -2,7 +2,8 @@
 
 import { useEffect, useState } from "react";
 import { DEFAULT_BOOKS } from "../../data/books";
-import { loadBooks, saveBooks, loadReviews, setReviewHidden, uploadPage, loadRsvps } from "../../lib/supabase";
+import { INVITE } from "../../data/invite";
+import { loadBooks, saveBooks, loadReviews, setReviewHidden, uploadPage, loadInvite, saveInvite } from "../../lib/supabase";
 
 const PASSWORD = "1234";
 
@@ -36,7 +37,7 @@ export default function Admin() {
   const [pw, setPw] = useState("");
   const [books, setBooks] = useState(null);
   const [reviews, setReviews] = useState([]);
-  const [rsvps, setRsvps] = useState([]);
+  const [inv, setInv] = useState(INVITE);
   const [msg, setMsg] = useState("");
   const [busy, setBusy] = useState("");
   const [origin, setOrigin] = useState("");
@@ -52,7 +53,7 @@ export default function Admin() {
     if (!ok) return;
     loadBooks().then((b) => setBooks(b && b.length ? b : DEFAULT_BOOKS));
     refreshReviews();
-    loadRsvps().then(setRsvps).catch(() => {});
+    loadInvite().then((saved) => saved && setInv({ ...INVITE, ...saved }));
   }, [ok]);
 
   if (!ok) {
@@ -125,12 +126,26 @@ export default function Admin() {
     }
   };
 
+  const setI = (patch) => setInv((prev) => ({ ...prev, ...patch }));
+  const setContact = (i, patch) => setInv((prev) => ({ ...prev, contacts: prev.contacts.map((c, j) => (j === i ? { ...c, ...patch } : c)) }));
+  const saveInv = async () => {
+    setBusy("inv");
+    try {
+      const { title, lead, ...rest } = inv; // 제목·표지 문구는 기본값을 따른다
+      await saveInvite({ ...rest, contacts: inv.contacts.filter((c) => c.name.trim() || c.phone.trim()) });
+      setMsg("초대장을 저장했어요 ✅");
+    } catch (e) {
+      setMsg(`초대장 저장 실패: ${e.message}`);
+    }
+    setBusy("");
+  };
+
   const titleOf = (id) => books.find((b) => b.id === id)?.title || "";
 
   return (
     <div className="admin">
       <div className="admin-in">
-        <h1>동화책 우주 전시관 관리</h1>
+        <h1>성과보고 발표회 전시 관리</h1>
         <div className="links">
           <span>📱 참여자용 주소: <a href="/" target="_blank">{origin}/</a></span>
           <span>💌 모바일 초대장: <a href="/invite" target="_blank">{origin}/invite</a></span>
@@ -188,25 +203,56 @@ export default function Admin() {
           </tbody>
         </table>
 
-        <h2>3. 초대장 참석 회신 (참석 {rsvps.filter((r) => r.attend === "yes").reduce((a, r) => a + (Number(r.count) || 1), 0)}명 · 불참 {rsvps.filter((r) => r.attend === "no").length}건)</h2>
-        <table>
-          <tbody>
-            {rsvps.map((r) => (
-              <tr key={r.id}>
-                <td>{r.name}</td>
-                <td style={{ color: "#8d7cc0" }}>{r.org}</td>
-                <td>{r.attend === "yes" ? `참석 ${r.count}명` : "불참"}</td>
-                <td style={{ color: "#8d7cc0", fontSize: 12, whiteSpace: "nowrap" }}>{new Date(r.at).toLocaleString("ko-KR", { month: "numeric", day: "numeric", hour: "2-digit", minute: "2-digit" })}</td>
-              </tr>
-            ))}
-            {!rsvps.length && <tr><td>아직 회신이 없어요.</td></tr>}
-          </tbody>
-        </table>
+        <h2>3. 모바일 초대장 내용</h2>
+        <p className="note">여기서 고치고 「초대장 저장」을 누르면 <a href="/invite" target="_blank">초대장</a>에 바로 반영됩니다. 이미 보낸 링크도 그대로 새 내용으로 보입니다.</p>
+        <div className="box">
+          <div className="grid2">
+            <label>날짜<input type="text" value={inv.date} onChange={(e) => setI({ date: e.target.value })} /></label>
+            <label>시간<input type="text" value={inv.time} onChange={(e) => setI({ time: e.target.value })} /></label>
+            <label>장소 이름<input type="text" value={inv.place} onChange={(e) => setI({ place: e.target.value })} /></label>
+            <label>주소<input type="text" value={inv.address} onChange={(e) => setI({ address: e.target.value })} /></label>
+          </div>
+          <label>지도에서 찾을 이름 (적으면 「카카오맵·네이버지도로 보기」 단추가 생깁니다. 예: 수성구청)
+            <input type="text" value={inv.mapQuery} onChange={(e) => setI({ mapQuery: e.target.value })} />
+          </label>
+          <label>모시는 분<input type="text" value={inv.target} onChange={(e) => setI({ target: e.target.value })} /></label>
+          <label>모시는 글 (줄을 바꾸면 초대장에서도 줄이 바뀝니다)
+            <textarea rows={9} value={inv.greeting.join("\n")} onChange={(e) => setI({ greeting: e.target.value.split("\n") })} />
+          </label>
+          <label>보내는 이<input type="text" value={inv.from} onChange={(e) => setI({ from: e.target.value })} /></label>
+          <label>행사 순서 (한 줄에 하나씩: 시간 | 제목 | 설명 · 다 지우면 그 칸이 사라집니다)
+            <textarea
+              rows={5}
+              value={inv.program.map((p) => [p.time, p.name, p.desc].join(" | ")).join("\n")}
+              onChange={(e) => setI({ program: e.target.value.split("\n").filter((l) => l.trim()).map((l) => { const [time = "", name = "", desc = ""] = l.split("|").map((x) => x.trim()); return { time, name, desc }; }) })}
+            />
+          </label>
+          <label>주최·주관<input type="text" value={inv.host} onChange={(e) => setI({ host: e.target.value })} /></label>
+        </div>
+
+        <h2>4. 관련 문의 담당자</h2>
+        <p className="note">전화번호를 적으면 초대장에 「전화 걸기」 단추가 생깁니다. 비워 두면 이름만 보입니다.</p>
+        {inv.contacts.map((c, i) => (
+          <div className="box" key={i}>
+            <div className="grid2">
+              <label>이름<input type="text" value={c.name} onChange={(e) => setContact(i, { name: e.target.value })} /></label>
+              <label>소속·역할<input type="text" value={c.role} onChange={(e) => setContact(i, { role: e.target.value })} /></label>
+            </div>
+            <div className="row">
+              <input type="text" placeholder="전화번호 (예: 053-000-0000)" value={c.phone} onChange={(e) => setContact(i, { phone: e.target.value })} style={{ flex: 1 }} />
+              <button className="b danger" onClick={() => setI({ contacts: inv.contacts.filter((_, j) => j !== i) })}>빼기</button>
+            </div>
+          </div>
+        ))}
+        <div className="row" style={{ marginTop: 12 }}>
+          <button className="b" onClick={() => setI({ contacts: [...inv.contacts, { name: "", role: "", phone: "" }] })}>+ 담당자 추가</button>
+          <button className="b primary" onClick={saveInv} disabled={!!busy}>{busy === "inv" ? "저장 중…" : "💌 초대장 저장"}</button>
+        </div>
       </div>
 
       <div className="savebar">
         <span className="msg">{msg}</span>
-        <button className="b primary" onClick={save} disabled={!!busy}>{busy === "save" ? "저장 중…" : "저장하기"}</button>
+        <button className="b primary" onClick={save} disabled={!!busy}>{busy === "save" ? "저장 중…" : "동화책 저장하기"}</button>
       </div>
     </div>
   );

@@ -7,6 +7,7 @@ import { loadBooks, loadReviews, addReview } from "../lib/supabase";
 import { groupReviews, keyOf } from "../lib/words";
 import Viewer from "./Viewer";
 import ReviewForm from "./ReviewForm";
+import Ddubi from "./Ddubi";
 
 const COLORS = ["#ffffff", "#ffe9a8", "#ffd6ee", "#cdf1ff", "#dcffd9", "#eadcff"];
 const hash = (s) => [...s].reduce((a, c) => (a * 31 + c.charCodeAt(0)) >>> 0, 7);
@@ -437,6 +438,7 @@ export default function Space({ show = false }) {
       </div>
 
       <canvas className="stars" ref={starRef} />
+      <Ddubi paused={!!(openBook || form || picked)} talk={!show} />
 
       <header className="top" ref={headRef}>
         <h1>{SITE.title}</h1>
@@ -454,7 +456,7 @@ export default function Space({ show = false }) {
         <footer className="bottom">
           <p className="guide">👆 {SITE.guide}</p>
           <button className="btn-write" onClick={() => setForm({ book: null })}>✍ 소감 한마디 띄우기</button>
-          <p className="count">지금까지 떠오른 소감 {total}개</p>
+          <p className="count">지금까지 떠오른 소감 {total}개 · 캐릭터 ‘뚜비’ ⓒ 대구광역시 수성구청</p>
         </footer>
       )}
 
@@ -465,6 +467,7 @@ export default function Space({ show = false }) {
             <strong>휴대폰으로 찍어 보세요</strong>
             <span>동화책을 읽고 소감을 남기면<br />이 우주에 글자가 떠올라요</span>
             <em>소감 {total}개</em>
+            <small>캐릭터 ‘뚜비’ ⓒ 대구광역시 수성구청</small>
           </div>
         </aside>
       )}

@@ -1,22 +1,27 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { INVITE } from "../../data/invite";
+import { INVITE as BASE } from "../../data/invite";
 import { DEFAULT_BOOKS } from "../../data/books";
-import { loadBooks, addRsvp } from "../../lib/supabase";
+import { loadBooks, loadInvite } from "../../lib/supabase";
 
 // 모바일 초대장: 휴대폰에서 위아래로 넘겨 보는 한 장짜리 페이지
 export default function Invite() {
   const [books, setBooks] = useState(DEFAULT_BOOKS);
   const [toast, setToast] = useState("");
+  const [INVITE, setInvite] = useState(null); // 관리 화면에서 저장한 내용을 받아 온 뒤에 그린다
   const root = useRef(null);
 
   useEffect(() => {
     loadBooks().then((b) => b && b.length && setBooks(b));
+    const timer = setTimeout(() => setInvite((v) => v || BASE), 2500);
+    loadInvite().then((saved) => setInvite({ ...BASE, ...(saved || {}) }));
+    return () => clearTimeout(timer);
   }, []);
 
   // 화면에 들어올 때 스르륵 나타나기
   useEffect(() => {
+    if (!INVITE) return;
     const els = root.current.querySelectorAll(".rise");
     const io = new IntersectionObserver(
       (entries) => entries.forEach((e) => e.isIntersecting && e.target.classList.add("in")),
@@ -24,7 +29,7 @@ export default function Invite() {
     );
     els.forEach((el) => io.observe(el));
     return () => io.disconnect();
-  }, []);
+  }, [INVITE]);
 
   const say = (m) => {
     setToast(m);
@@ -43,6 +48,8 @@ export default function Invite() {
       /* 공유 창을 그냥 닫은 경우 */
     }
   };
+
+  if (!INVITE) return <div className="inv" />;
 
   const covers = books.flatMap((b) => (b.pages?.length > 12 ? [b.pages[0], b.pages[6], b.pages[12]] : [b.cover])).filter(Boolean);
   const q = encodeURIComponent(INVITE.mapQuery);
@@ -104,7 +111,7 @@ export default function Invite() {
 
       {/* 5. 전시 미리보기 */}
       <section className="inv-sec">
-        <h2 className="rise">동화책 우주 전시관</h2>
+        <h2 className="rise">동화책 전시 미리 보기</h2>
         <p className="inv-note rise">AI와 함께 만든 동화책이 우주에 둥둥 떠다녀요.<br />미리 들어가서 읽어 보실 수 있어요.</p>
         <div className="inv-books rise">
           {books.map((b) => (
@@ -134,64 +141,28 @@ export default function Invite() {
         </div>
       </section>
 
-      {/* 7. 참석 회신 */}
-      {INVITE.rsvp && <Rsvp say={say} />}
+      {/* 7. 관련 문의 */}
+      {INVITE.contacts?.length > 0 && (
+        <section className="inv-sec">
+          <h2 className="rise">관련 문의</h2>
+          <div className="inv-contacts rise">
+            {INVITE.contacts.map((c, i) => (
+              <div key={i}>
+                <p><b>{c.name}</b><span>{c.role}</span></p>
+                {c.phone && <a href={`tel:${c.phone.replace(/[^0-9+]/g, "")}`}>📞 {c.phone}</a>}
+              </div>
+            ))}
+          </div>
+        </section>
+      )}
 
       {/* 8. 맺음 */}
       <footer className="inv-foot">
         <button className="inv-btn ghost" onClick={share}>💌 초대장 공유하기</button>
-        <p>{INVITE.contact}</p>
         <p>{INVITE.host}</p>
       </footer>
 
       {toast && <div className="toast">{toast}</div>}
     </div>
-  );
-}
-
-function Rsvp({ say }) {
-  const [d, setD] = useState({ name: "", org: "", attend: "yes", count: 1 });
-  const [state, setState] = useState("idle"); // idle | sending | done
-  const set = (patch) => setD((prev) => ({ ...prev, ...patch }));
-
-  const send = async () => {
-    if (!d.name.trim()) return say("성함을 적어 주세요");
-    setState("sending");
-    try {
-      await addRsvp({ name: d.name.trim().slice(0, 20), org: d.org.trim().slice(0, 30), attend: d.attend, count: d.attend === "yes" ? d.count : 0 });
-      setState("done");
-    } catch {
-      setState("idle");
-      say("지금은 전송이 안 돼요. 잠시 뒤 다시 눌러 주세요");
-    }
-  };
-
-  return (
-    <section className="inv-sec">
-      <h2 className="rise">참석 여부 알려 주기</h2>
-      <div className="inv-card rise">
-        {state === "done" ? (
-          <p className="inv-thanks">{d.attend === "yes" ? "고맙습니다! 행사장에서 반갑게 뵙겠습니다 💜" : "알려 주셔서 고맙습니다. 전시관은 온라인으로도 언제든 보실 수 있어요 💜"}</p>
-        ) : (
-          <>
-            <div className="inv-choice">
-              <button className={d.attend === "yes" ? "on" : ""} onClick={() => set({ attend: "yes" })}>😊 참석해요</button>
-              <button className={d.attend === "no" ? "on" : ""} onClick={() => set({ attend: "no" })}>🙏 어려워요</button>
-            </div>
-            <input placeholder="성함" value={d.name} maxLength={20} onChange={(e) => set({ name: e.target.value })} />
-            <input placeholder="소속 (예: ○○어린이집 · 학부모)" value={d.org} maxLength={30} onChange={(e) => set({ org: e.target.value })} />
-            {d.attend === "yes" && (
-              <div className="inv-count">
-                <span>함께 오시는 인원</span>
-                <button onClick={() => setD((p) => ({ ...p, count: Math.max(1, p.count - 1) }))}>−</button>
-                <b>{d.count}명</b>
-                <button onClick={() => setD((p) => ({ ...p, count: Math.min(10, p.count + 1) }))}>＋</button>
-              </div>
-            )}
-            <button className="inv-btn main" onClick={send} disabled={state === "sending"}>{state === "sending" ? "보내는 중…" : "회신 보내기"}</button>
-          </>
-        )}
-      </div>
-    </section>
   );
 }

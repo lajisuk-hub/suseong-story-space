@@ -16,7 +16,7 @@ export const DEFAULT_BOOKS = [
 ];
 
 export const SITE = {
-  title: "수성구 AI 선도기관 성과전시회",
+  title: "수성구 AI 영유아 선도기관 성과보고 발표회",
   subtitle: "읽고싶은 책을 클릭 후 소감을 남겨주세요!",
   guide: "옆으로 밀어 우주를 여행하고, 동화책을 눌러 보세요",
 };
