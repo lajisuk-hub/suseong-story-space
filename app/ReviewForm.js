@@ -24,7 +24,7 @@ export default function ReviewForm({ book, books, popular, onCancel, onSubmit })
     <div className="dim" onClick={onCancel}>
       <div className="form" onClick={(e) => e.stopPropagation()}>
         <p className="form-emoji">🚀</p>
-        <h2>후기 한마디를 우주에 띄워 주세요</h2>
+        <h2>소감 한마디를 우주에 띄워 주세요</h2>
         {book ? (
           <p className="form-book">『{book.title}』 잘 보셨나요?</p>
         ) : books.length > 1 ? (

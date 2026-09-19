@@ -32,6 +32,7 @@ export default function Space({ show = false }) {
   const worldRef = useRef(null);
   const thumbRef = useRef(null);
   const starRef = useRef(null);
+  const headRef = useRef(null);
   // 카메라: 넓은 우주의 어디를 보고 있는지 (x = 화면 왼쪽 끝의 위치)
   const cam = useRef({ x: null, v: 0, target: null, drag: null, moved: false, idleAt: 0, dir: 1 });
 
@@ -211,20 +212,21 @@ export default function Space({ show = false }) {
       const n = books.length;
       const bw = bookWidth(w, h, n);
       const cy = h * 0.46;
+      const headH = (headRef.current ? headRef.current.offsetHeight : 100) + 30; // 제목을 가리지 않게
       books.forEach((b, i) => {
         const el = bookEls.current.get(b.id);
         if (!el) return;
         const hub = i % ZONES, j = Math.floor(i / ZONES);
         const k = Math.ceil((n - hub) / ZONES); // 이 구역의 책 수
         const cx = hub * (imgW - overlapOf(imgW)) + imgW / 2;
-        const rx = k <= 2 ? Math.min(imgW * 0.2, w * 0.34) : k <= 6 ? imgW * 0.3 : imgW * 0.42;
+        const rx = k <= 2 ? Math.min(imgW * 0.2, w * 0.34) : k <= 6 ? Math.min(imgW * 0.37, Math.max(w * 0.95, 320)) : imgW * 0.43;
         // 책이 많으면 안쪽·바깥쪽 고리로 번갈아 놓아 서로 덜 겹치게 한다
         const rings = k <= 6 ? [1] : k <= 14 ? [1, 0.62] : [1, 0.72, 0.44];
         const rf = rings[j % rings.length];
         const ang = (j / k) * 6.2832 + 3.5 + hub * 1.1 + t * 0.035 * (hub % 2 ? -1 : 1);
         const x = cx + Math.cos(ang) * rx * rf + Math.sin(t * 0.5 + i) * 10;
         let y = cy + Math.sin(ang) * h * 0.3 * rf + Math.cos(t * 0.42 + i * 1.7) * 14;
-        y = Math.max(bw * 0.8 + 40, Math.min(h - bw * 0.85 - (show ? 50 : 150), y));
+        y = Math.max(bw * 0.72 + headH, Math.min(h - bw * 0.85 - (show ? 50 : 150), y));
         const depth = 0.86 + 0.14 * Math.sin(ang);
         const rz = Math.sin(t * 0.33 + i * 2.1) * 5;
         const ry = Math.sin(t * 0.45 + i * 1.3) * 16;
@@ -436,9 +438,10 @@ export default function Space({ show = false }) {
 
       <canvas className="stars" ref={starRef} />
 
-      <header className="top">
-        <p className="top-sub">{SITE.title}</p>
-        <h1>{SITE.subtitle}</h1>
+      <header className="top" ref={headRef}>
+        <h1>{SITE.title}</h1>
+        <p className="top-sub">{SITE.subtitle}</p>
+        <div className="track"><b ref={thumbRef} /></div>
       </header>
 
       {!show && (
@@ -447,13 +450,11 @@ export default function Space({ show = false }) {
           <button className="nav right" onClick={() => step(1)} aria-label="오른쪽으로 이동">›</button>
         </>
       )}
-      <div className="track"><b ref={thumbRef} /></div>
-
       {!show && (
         <footer className="bottom">
           <p className="guide">👆 {SITE.guide}</p>
-          <button className="btn-write" onClick={() => setForm({ book: null })}>✍ 후기 한마디 띄우기</button>
-          <p className="count">지금까지 떠오른 후기 {total}개</p>
+          <button className="btn-write" onClick={() => setForm({ book: null })}>✍ 소감 한마디 띄우기</button>
+          <p className="count">지금까지 떠오른 소감 {total}개</p>
         </footer>
       )}
 
@@ -462,8 +463,8 @@ export default function Space({ show = false }) {
           {qr && <img src={qr} alt="전시관 QR" />}
           <div>
             <strong>휴대폰으로 찍어 보세요</strong>
-            <span>동화책을 읽고 후기를 남기면<br />이 우주에 글자가 떠올라요</span>
-            <em>후기 {total}개</em>
+            <span>동화책을 읽고 소감을 남기면<br />이 우주에 글자가 떠올라요</span>
+            <em>소감 {total}개</em>
           </div>
         </aside>
       )}
@@ -524,6 +525,6 @@ function worldSize(w, h) {
 // 책이 많을수록 표지를 작게 (세 구역에 나뉘므로 구역당 권수로 따진다)
 function bookWidth(w, h, n) {
   const per = Math.ceil(n / ZONES);
-  const k = per <= 2 ? 0.2 : per <= 5 ? 0.165 : per <= 10 ? 0.135 : per <= 16 ? 0.11 : 0.09;
+  const k = per <= 2 ? 0.2 : per <= 5 ? 0.14 : per <= 10 ? 0.125 : per <= 16 ? 0.11 : 0.09;
   return Math.round(Math.max(96, Math.sqrt(w * h) * k));
 }

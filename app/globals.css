@@ -18,8 +18,8 @@ button { font: inherit; color: inherit; border: 0; background: none; cursor: poi
 
 .top { position: absolute; top: max(16px, env(safe-area-inset-top)); left: 0; right: 0; text-align: center; z-index: 40; pointer-events: none;
   text-shadow: 0 2px 12px rgba(30,10,90,.85), 0 0 3px rgba(30,10,90,.9); }
-.top-sub { font-size: clamp(12px, 1.5vw, 18px); letter-spacing: .04em; opacity: .95; }
-.top h1 { font-size: clamp(24px, 3.6vw, 52px); margin-top: 2px; letter-spacing: .02em; }
+.top h1 { font-size: clamp(22px, 3.4vw, 50px); letter-spacing: .02em; }
+.top-sub { font-size: clamp(14px, 1.7vw, 24px); margin-top: 4px; letter-spacing: .02em; }
 
 /* 떠다니는 후기 글자 */
 .word { position: absolute; left: 0; top: 0; white-space: nowrap; line-height: 1.15; padding: 4px 8px;
@@ -63,14 +63,14 @@ button { font: inherit; color: inherit; border: 0; background: none; cursor: poi
   color: #4a2f96; background: rgba(255,255,255,.78); box-shadow: 0 6px 18px rgba(40,10,110,.4); }
 .nav.left { left: 10px; } .nav.right { right: 10px; }
 .nav:active { transform: scale(.92); }
-.track { position: absolute; left: 50%; top: calc(max(16px, env(safe-area-inset-top)) + clamp(64px, 7.4vw, 104px)); z-index: 40; width: min(220px, 46vw); height: 6px; transform: translateX(-50%);
+.track { position: relative; margin: 10px auto 0; width: min(220px, 46vw); height: 6px;
   border-radius: 9px; background: rgba(255,255,255,.35); box-shadow: 0 0 0 1px rgba(60,30,140,.25); pointer-events: none; }
 .track b { position: absolute; top: 0; bottom: 0; border-radius: 9px; background: linear-gradient(90deg, #ffd76a, #ff9ce0); }
 .show .track { display: none; }
 
 /* 큰 화면(전시 모드) */
-.show .top h1 { font-size: clamp(36px, 4.4vw, 84px); }
-.show .top-sub { font-size: clamp(16px, 1.8vw, 30px); }
+.show .top h1 { font-size: clamp(34px, 4.2vw, 80px); }
+.show .top-sub { font-size: clamp(18px, 2.1vw, 40px); }
 .qr-card { position: absolute; right: 2.2vw; bottom: 2.2vw; z-index: 50; display: flex; align-items: center; gap: 1.2vw; padding: 1.1vw 1.5vw 1.1vw 1.1vw;
   background: rgba(255,255,255,.93); color: #33206e; border-radius: 1.4vw; box-shadow: 0 12px 40px rgba(40,10,110,.5); }
 .qr-card img { width: 11vw; height: 11vw; min-width: 120px; min-height: 120px; border-radius: .6vw; display: block; }

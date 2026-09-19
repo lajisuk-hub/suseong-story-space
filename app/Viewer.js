@@ -65,7 +65,7 @@ export default function Viewer({ book, canReview, onClose }) {
           <h2>{book.title}</h2>
           <p>{book.org}</p>
           <a className="btn-main" href={book.link} target="_blank" rel="noopener noreferrer">📖 전자책 열기 (새 창)</a>
-          {canReview && <button className="btn-ghost light" onClick={() => onClose(true)}>다 봤어요 · 후기 남기기</button>}
+          {canReview && <button className="btn-ghost light" onClick={() => onClose(true)}>다 봤어요 · 소감 남기기</button>}
         </div>
       </div>
     );
@@ -108,7 +108,7 @@ export default function Viewer({ book, canReview, onClose }) {
         <div className="v-bar"><b style={{ width: `${((cur + 1) / views.length) * 100}%` }} /></div>
         <span>{views[cur].map((i) => i + 1).join("–")} / {pages.length}</span>
         {last && canReview && (
-          <button className="btn-main" onClick={() => onClose(true)}>다 봤어요! 후기 남기기 ✍</button>
+          <button className="btn-main" onClick={() => onClose(true)}>다 봤어요! 소감 남기기 ✍</button>
         )}
       </div>
     </div>

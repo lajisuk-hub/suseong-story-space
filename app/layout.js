@@ -1,11 +1,11 @@
 import "./globals.css";
 
 export const metadata = {
-  title: "동화책 우주 전시관 | 수성구 AI 선도기관 성과보고회",
-  description: "우주에 떠다니는 동화책을 눌러 읽고, 후기 한마디를 우주에 띄워 보세요.",
+  title: "수성구 AI 선도기관 성과전시회",
+  description: "읽고싶은 책을 클릭 후 소감을 남겨주세요!",
   openGraph: {
-    title: "동화책 우주 전시관",
-    description: "수성구 AI 선도기관 성과보고회 · 동화책을 읽고 후기를 우주에 띄워 보세요",
+    title: "수성구 AI 선도기관 성과전시회",
+    description: "읽고싶은 책을 클릭 후 소감을 남겨주세요!",
     images: ["/space1.jpg"],
   },
 };
