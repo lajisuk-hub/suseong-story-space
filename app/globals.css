@@ -297,3 +297,10 @@ button { font: inherit; color: inherit; border: 0; background: none; cursor: poi
 .inv-orgs b { font-family: "Jua", sans-serif; font-weight: 400; font-size: 16px; display: block; }
 .inv-orgs span { display: block; font-size: 13px; line-height: 1.5; opacity: .88; margin-top: 3px; word-break: keep-all; }
 .inv-line span, .inv-contacts b, .inv-foot p { word-break: keep-all; }
+/* 초대장: 전시관 예시 영상 (2026-09-26) */
+.inv h2 { white-space: pre-line; }
+.inv-video { position: relative; width: min(280px, 78vw); margin: 20px auto 0; border-radius: 26px; overflow: hidden; background: #1e0a54; box-shadow: 0 0 0 3px rgba(255,255,255,.85), 0 0 30px 6px rgba(255,236,170,.45), 0 18px 40px rgba(15,4,60,.55); }
+.inv-video video { display: block; width: 100%; aspect-ratio: 1 / 2; object-fit: cover; }
+.inv-video span { position: absolute; bottom: 12px; right: 12px; padding: 4px 10px; border-radius: 999px; font-size: 11px; letter-spacing: .06em; color: #33206e; background: rgba(255,255,255,.88); }
+.inv-open { display: inline-block; margin-top: 20px; padding: 14px 20px; border-radius: 22px; font-size: 15px; line-height: 1.6; background: rgba(255,255,255,.12); border: 1px solid rgba(255,255,255,.22); word-break: keep-all; }
+.inv-open b { font-family: "Jua", sans-serif; font-weight: 400; font-size: 17px; color: #ffe9a8; }

@@ -154,19 +154,15 @@ export default function Invite() {
         </section>
       )}
 
-      {/* 5. 전시 미리보기 */}
+      {/* 5. 전시 미리 보기 (영상) — 전시관은 행사 당일에 연다 */}
       <section className="inv-sec">
-        <h2 className="rise">동화책 전시 미리 보기</h2>
-        <p className="inv-note rise">AI와 함께 만든 동화책이 우주에 둥둥 떠다녀요.<br />미리 들어가서 읽어 보실 수 있어요.</p>
-        <div className="inv-books rise">
-          {books.map((b) => (
-            <figure key={b.id}>
-              <img src={b.cover} alt="" />
-              <figcaption>{b.title}<small>{b.org}</small></figcaption>
-            </figure>
-          ))}
+        <h2 className="rise">동화책 우주 전시관,{"\n"}이렇게 열려요</h2>
+        <p className="inv-note rise">AI와 함께 만든 동화책이 우주에 둥둥 떠다니고,<br />책을 누르면 펼쳐져 한 장씩 읽을 수 있어요.</p>
+        <div className="inv-video rise">
+          <video src="/preview.mp4" poster="/preview-poster.jpg" autoPlay muted loop playsInline preload="metadata" />
+          <span>예시 화면</span>
         </div>
-        <a className="inv-btn main rise" href="/">🚀 우주 전시관 미리 들어가 보기</a>
+        <p className="inv-open rise">🚀 우주 전시관은 행사 당일<br /><b>{INVITE.date}</b>에 문을 열어요</p>
       </section>
 
       {/* 6. 오시는 길 */}
