@@ -131,7 +131,7 @@ export default function Admin() {
   const saveInv = async () => {
     setBusy("inv");
     try {
-      const { title, lead, ...rest } = inv; // 제목·표지 문구는 기본값을 따른다
+      const { title, sub, lead, about, participants, ...rest } = inv; // 제목·표지 문구·걸어온 길·참여 기관은 코드 기본값을 따른다
       await saveInvite({ ...rest, contacts: inv.contacts.filter((c) => c.name.trim() || c.phone.trim()) });
       setMsg("초대장을 저장했어요 ✅");
     } catch (e) {
@@ -209,6 +209,7 @@ export default function Admin() {
           <div className="grid2">
             <label>날짜<input type="text" value={inv.date} onChange={(e) => setI({ date: e.target.value })} /></label>
             <label>시간<input type="text" value={inv.time} onChange={(e) => setI({ time: e.target.value })} /></label>
+            <label>일시 아래 안내 (선택)<input type="text" value={inv.note || ""} onChange={(e) => setI({ note: e.target.value })} /></label>
             <label>장소 이름<input type="text" value={inv.place} onChange={(e) => setI({ place: e.target.value })} /></label>
             <label>주소<input type="text" value={inv.address} onChange={(e) => setI({ address: e.target.value })} /></label>
           </div>

@@ -281,3 +281,19 @@ button { font: inherit; color: inherit; border: 0; background: none; cursor: poi
 @media (max-width: 700px) { .ddubi { width: 88px; height: 98px; } .ddubi-say { font-size: 13px; max-width: 190px; } }
 .ddubi-say.below { bottom: auto; top: 100%; margin-top: 4px; }
 .ddubi-say.below::after { top: auto; bottom: 100%; border-top-color: transparent; border-bottom-color: #fff; }
+
+/* 초대장: 공문 반영 추가 칸 (2026-09-26) */
+.inv-sub { margin-top: 10px; font-size: 13px; letter-spacing: .04em; color: #d9c8ff; }
+.inv-stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin: 18px 0 22px; }
+.inv-stats > div { padding: 14px 8px; border-radius: 18px; background: rgba(255,255,255,.12); border: 1px solid rgba(255,255,255,.22); display: grid; gap: 6px; }
+.inv-stats b { font-family: "Jua", sans-serif; font-weight: 400; font-size: 13px; color: #ffe9a8; }
+.inv-stats span { font-size: 13px; line-height: 1.45; white-space: pre-line; word-break: keep-all; }
+.inv-line.small li { padding-bottom: 16px; }
+.inv-line.small b { font-size: 17px; }
+.inv-line.small span { font-size: 13px; }
+.inv-orgs { list-style: none; display: grid; gap: 8px; text-align: left; margin-top: 18px; }
+.inv-orgs li { display: grid; grid-template-columns: 30px 1fr; column-gap: 12px; align-items: start; padding: 13px 16px; border-radius: 18px; background: rgba(255,255,255,.12); border: 1px solid rgba(255,255,255,.22); }
+.inv-orgs i { font-style: normal; font-family: "Jua", sans-serif; width: 30px; height: 30px; display: grid; place-items: center; border-radius: 50%; font-size: 14px; color: #5a3fb5; background: linear-gradient(135deg, #ffe9a8, #ffd0f0); }
+.inv-orgs b { font-family: "Jua", sans-serif; font-weight: 400; font-size: 16px; display: block; }
+.inv-orgs span { display: block; font-size: 13px; line-height: 1.5; opacity: .88; margin-top: 3px; word-break: keep-all; }
+.inv-line span, .inv-contacts b, .inv-foot p { word-break: keep-all; }

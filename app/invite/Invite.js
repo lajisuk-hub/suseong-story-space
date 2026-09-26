@@ -68,6 +68,7 @@ export default function Invite() {
           <span className="inv-badge">INVITATION</span>
           <p className="inv-hello">초대합니다</p>
           <h1>{INVITE.title.replace(" 성과보고", "\n성과보고")}</h1>
+          {INVITE.sub && <p className="inv-sub">{INVITE.sub}</p>}
           <p className="inv-lead">{INVITE.lead}</p>
           <p className="inv-when">{INVITE.date}<br />{INVITE.time} · {INVITE.place}</p>
         </div>
@@ -89,7 +90,7 @@ export default function Invite() {
       <section className="inv-sec">
         <h2 className="rise">행사 안내</h2>
         <div className="inv-info rise">
-          <div><i>📅</i><b>일시</b><span>{INVITE.date}<br />{INVITE.time}</span></div>
+          <div><i>📅</i><b>일시</b><span>{INVITE.date}<br />{INVITE.time}{INVITE.note && <><br /><small>※ {INVITE.note}</small></>}</span></div>
           <div><i>📍</i><b>장소</b><span>{INVITE.place}<br /><small>{INVITE.address}</small></span></div>
           <div><i>💜</i><b>모시는 분</b><span>{INVITE.target}</span></div>
         </div>
@@ -105,6 +106,48 @@ export default function Invite() {
                 <em>{p.time}</em>
                 <b>{p.name}</b>
                 <span>{p.desc}</span>
+              </li>
+            ))}
+          </ol>
+        </section>
+      )}
+
+      {/* 4-1. 걸어온 길 */}
+      {INVITE.about && (
+        <section className="inv-sec">
+          <h2 className="rise">걸어온 길</h2>
+          {INVITE.sub && <p className="inv-note rise">{INVITE.sub}<br />AI 기반 보육 전문적 학습공동체가 함께한 여섯 달</p>}
+          <div className="inv-stats rise">
+            {INVITE.about.stats.map((s, i) => (
+              <div key={i}><b>{s.label}</b><span>{s.value}</span></div>
+            ))}
+          </div>
+          <ol className="inv-line small">
+            {INVITE.about.steps.map((s, i) => (
+              <li key={i} className="rise">
+                <em>{s.when}</em>
+                <b>{s.what}</b>
+                <span>{s.desc}</span>
+              </li>
+            ))}
+          </ol>
+        </section>
+      )}
+
+      {/* 4-2. 함께한 어린이집 */}
+      {INVITE.participants?.length > 0 && (
+        <section className="inv-sec">
+          <h2 className="rise">함께한 {INVITE.participants.length}개 어린이집</h2>
+          <p className="inv-note rise">어린이집마다 AI 동화책 한 권과 AI 동요 한 곡을 만들었어요. (가나다순)</p>
+          <ol className="inv-orgs">
+            {INVITE.participants.map((p, i) => (
+              <li key={i} className="rise">
+                <i>{i + 1}</i>
+                <div>
+                  <b>{p.org}</b>
+                  <span>📖 {p.book}</span>
+                  {p.song && <span>🎵 {p.song}</span>}
+                </div>
               </li>
             ))}
           </ol>
