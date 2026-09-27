@@ -104,15 +104,15 @@ export default function Invite() {
         {INVITE.program.length > 0 && (
           <>
             <h3 className="inv-h3 rise">식 순</h3>
-            <ol className="inv-line">
+            <div className="inv-info inv-steps rise">
               {INVITE.program.map((p, i) => (
-                <li key={i} className="rise">
-                  {p.time && <em>{p.time}</em>}
-                  <b>{p.name}</b>
+                <div key={i}>
+                  <i>{p.icon || ["🖼️", "🎤", "✨"][i % 3]}</i>
+                  <b>{p.name}{p.time && <small> · {p.time}</small>}</b>
                   <span>{p.desc}</span>
-                </li>
+                </div>
               ))}
-            </ol>
+            </div>
           </>
         )}
       </section>
@@ -184,7 +184,7 @@ export default function Invite() {
       {/* 6. 오시는 길 */}
       <section className="inv-sec">
         <h2 className="rise">오시는 길</h2>
-        <div className="inv-card rise">
+        <div className="inv-card compact rise">
           <p className="inv-place">{INVITE.place}</p>
           <p className="inv-addr">{INVITE.address}</p>
           {INVITE.mapQuery ? (
@@ -202,7 +202,7 @@ export default function Invite() {
       {INVITE.contacts?.length > 0 && (
         <section className="inv-sec">
           <h2 className="rise">관련 문의</h2>
-          <div className="inv-contacts rise">
+          <div className="inv-contacts compact rise">
             {INVITE.contacts.map((c, i) => (
               <div key={i} className={!c.name && !c.role ? "phone-only" : ""}>
                 {(c.name || c.role) && <p><b>{c.name}</b><span>{c.role}</span></p>}

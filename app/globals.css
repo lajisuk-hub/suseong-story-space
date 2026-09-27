@@ -338,3 +338,18 @@ button { font: inherit; color: inherit; border: 0; background: none; cursor: poi
 .inv-note { white-space: pre-line; }
 .inv-maps .inv-btn { font-size: 14px; padding: 13px 4px; white-space: nowrap; }
 .inv-lock { display: inline-block; margin-top: 12px; padding: 8px 14px; border-radius: 999px; font-style: normal; font-size: 14px; color: #ffe9a8; background: rgba(255,233,168,.12); border: 1px dashed rgba(255,233,168,.55); }
+/* 담당자 3차 의견(2026-09-27): 식순 상자, 🔒 배지를 단추 크기로, 오시는 길·문의 상자 축소, 뚜비 안내 말풍선 */
+.inv-steps { margin-top: 4px; }
+.inv-steps b { font-size: 17px; color: #fff; }
+.inv-steps b small { font-size: 12px; color: #ffe9a8; opacity: .9; }
+.inv-steps span { font-size: 15px; }
+.inv-lock { display: block; width: 100%; margin-top: 12px; padding: 13px 14px; font-size: 16px; text-align: center; border-radius: 16px; }
+.inv-card.compact { padding: 20px 18px; }
+.inv-card.compact .inv-place { font-size: 18px; }
+.inv-card.compact .inv-addr { font-size: 13px; }
+.inv-card.compact .inv-maps { margin-top: 4px; }
+.inv-card.compact .inv-maps .inv-btn { padding: 11px 4px; font-size: 13px; margin-top: 10px; border-radius: 12px; }
+.inv-contacts.compact > div { padding: 12px 16px; }
+.inv-contacts.compact > div.phone-only a { font-size: 16px; padding: 10px 18px; }
+.ddubi-say.hint { font-size: 13px; padding: 7px 12px; max-width: 170px; }
+@media (max-width: 700px) { .ddubi-say.hint { font-size: 12px; } }

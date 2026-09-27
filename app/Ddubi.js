@@ -18,6 +18,7 @@ export default function Ddubi({ paused = false, talk = true }) {
   const ref = useRef(null);
   const [frame, setFrame] = useState(0);
   const [line, setLine] = useState("");
+  const [hint, setHint] = useState(true); // 처음엔 「뚜비를 터치해 주세요」 말풍선을 달고 다닌다 (담당자 요청)
   const [pos, setPos] = useState({ shift: 0, below: false }); // 말풍선이 화면 밖으로 나가지 않게
   const state = useRef({ paused, hover: false });
   state.current.paused = paused;
@@ -51,6 +52,13 @@ export default function Ddubi({ paused = false, talk = true }) {
       el.style.transform = `translate3d(${x}px, ${y}px, 0)`;
       state.current.x = x + size / 2;
       state.current.y = y;
+      // 안내 말풍선이 화면 밖으로 잘리지 않게 좌우로 밀어 준다
+      const h = el.querySelector(".ddubi-say.hint");
+      if (h) {
+        const half = h.offsetWidth / 2 || 85, cx = x + size / 2;
+        h.style.marginLeft = `${Math.max(half + 8 - cx, 0) - Math.max(cx + half + 8 - window.innerWidth, 0)}px`;
+        h.classList.toggle("below", y < 60);
+      }
     };
     raf = requestAnimationFrame(step);
     return () => cancelAnimationFrame(raf);
@@ -59,6 +67,7 @@ export default function Ddubi({ paused = false, talk = true }) {
   // 누르면 말풍선으로 안내해 준다
   const speak = () => {
     if (!talk) return;
+    setHint(false);
     const cx = state.current.x || 0, half = 108;
     setPos({ shift: Math.max(half + 8 - cx, 0) - Math.max(cx + half + 8 - window.innerWidth, 0), below: (state.current.y || 0) < 90 });
     setLine((cur) => LINES[(LINES.indexOf(cur) + 1) % LINES.length]);
@@ -70,6 +79,7 @@ export default function Ddubi({ paused = false, talk = true }) {
   return (
     <button ref={ref} className="ddubi" onClick={speak} aria-label="수성구 캐릭터 뚜비" style={{ visibility: paused ? "hidden" : "visible" }}>
       {line && <span className={`ddubi-say${pos.below ? " below" : ""}`} style={{ marginLeft: pos.shift }}>{line}</span>}
+      {!line && hint && talk && <span className="ddubi-say hint">뚜비를 터치해 주세요 👆</span>}
       <img src={FRAMES[frame]} alt="" draggable={false} />
     </button>
   );
