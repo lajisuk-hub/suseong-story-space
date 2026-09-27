@@ -93,42 +93,35 @@ export default function Invite() {
         </div>
       </section>
 
-      {/* 3. 행사 안내 */}
+      {/* 3. 성과보고회 안내 (일시·장소 + 식순, 담당자 초대장 2쪽 구성) */}
       <section className="inv-sec">
-        <h2 className="rise">행사 안내</h2>
+        <h2 className="rise">성과보고회 안내</h2>
         <div className="inv-info rise">
           <div><i>📅</i><b>일시</b><span>{INVITE.date}<br />{INVITE.time}{INVITE.note && <><br /><small>※ {INVITE.note}</small></>}</span></div>
           <div><i>📍</i><b>장소</b><span>{INVITE.place}<br /><small>{INVITE.address}</small></span></div>
           {INVITE.target && <div><i>💜</i><b>모시는 분</b><span>{INVITE.target}</span></div>}
         </div>
+        {INVITE.program.length > 0 && (
+          <>
+            <h3 className="inv-h3 rise">식 순</h3>
+            <ol className="inv-line">
+              {INVITE.program.map((p, i) => (
+                <li key={i} className="rise">
+                  {p.time && <em>{p.time}</em>}
+                  <b>{p.name}</b>
+                  <span>{p.desc}</span>
+                </li>
+              ))}
+            </ol>
+          </>
+        )}
       </section>
-
-      {/* 4. 행사 순서 */}
-      {INVITE.program.length > 0 && (
-        <section className="inv-sec">
-          <h2 className="rise">행사 순서</h2>
-          <ol className="inv-line">
-            {INVITE.program.map((p, i) => (
-              <li key={i} className="rise">
-                <em>{p.time}</em>
-                <b>{p.name}</b>
-                <span>{p.desc}</span>
-              </li>
-            ))}
-          </ol>
-        </section>
-      )}
 
       {/* 4-1. 걸어온 길 */}
       {INVITE.about && (
         <section className="inv-sec">
           <h2 className="rise">걸어온 길</h2>
           {INVITE.sub && <p className="inv-note rise">{INVITE.sub}<br />AI 기반 보육 전문적 학습공동체가 함께한 여섯 달</p>}
-          <div className="inv-stats rise">
-            {INVITE.about.stats.map((s, i) => (
-              <div key={i}><b>{s.label}</b><span>{s.value}</span></div>
-            ))}
-          </div>
           <ol className="inv-line small">
             {INVITE.about.steps.map((s, i) => (
               <li key={i} className="rise">
@@ -145,7 +138,7 @@ export default function Invite() {
       {INVITE.participants?.length > 0 && (
         <section className="inv-sec">
           <h2 className="rise">AI 선도기관 어린이집</h2>
-          <p className="inv-note rise">{INVITE.participants.length}개 어린이집이 AI 그림책 한 권과 AI 동요 한 곡씩 만들었습니다.<br /><small>*지도교수: 라지숙(영유아교육디자인연구소 대표)</small></p>
+          <p className="inv-note rise">{INVITE.participantsIntro}{INVITE.participantsNote && <><br /><small>{INVITE.participantsNote}</small></>}</p>
           <ol className="inv-orgs">
             {INVITE.participants.map((p, i) => (
               <li key={i} className="rise">
@@ -163,8 +156,8 @@ export default function Invite() {
 
       {/* 5. 미리 만나보기 — 예시 영상 + 담당자 초대장의 미리보기 3종 */}
       <section className="inv-sec">
-        <h2 className="rise">미리 만나보기</h2>
-        <p className="inv-note rise">AI 아나카이브 스페이스(ONLINE 갤러리)에서는<br />AI 그림책이 우주에 떠다니고, 책을 누르면 펼쳐집니다.</p>
+        <h2 className="rise">{INVITE.previewTitle}</h2>
+        <p className="inv-note rise">{INVITE.previewText}</p>
         <div className="inv-video rise">
           <video src="/preview.mp4" poster="/preview-poster.jpg" autoPlay muted loop playsInline preload="metadata" />
           <span>예시 화면</span>
@@ -211,8 +204,8 @@ export default function Invite() {
           <h2 className="rise">관련 문의</h2>
           <div className="inv-contacts rise">
             {INVITE.contacts.map((c, i) => (
-              <div key={i}>
-                <p><b>{c.name}</b><span>{c.role}</span></p>
+              <div key={i} className={!c.name && !c.role ? "phone-only" : ""}>
+                {(c.name || c.role) && <p><b>{c.name}</b><span>{c.role}</span></p>}
                 {c.phone && <a href={`tel:${c.phone.replace(/[^0-9+]/g, "")}`}>📞 {c.phone}</a>}
               </div>
             ))}
