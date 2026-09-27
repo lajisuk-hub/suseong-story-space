@@ -175,10 +175,12 @@ export default function Invite() {
               <div key={i} className="rise">
                 <b>· {l.label}</b>
                 <span>{l.desc}</span>
-                {l.url && (
+                {l.url ? (
                   <a className="inv-btn main" href={l.url} target={l.url.startsWith("http") ? "_blank" : undefined} rel="noopener noreferrer">
                     {l.label} →
                   </a>
+                ) : (
+                  l.note && <em className="inv-lock">🔒 {l.note}</em>
                 )}
               </div>
             ))}
