@@ -304,3 +304,31 @@ button { font: inherit; color: inherit; border: 0; background: none; cursor: poi
 .inv-video span { position: absolute; bottom: 12px; right: 12px; padding: 4px 10px; border-radius: 999px; font-size: 11px; letter-spacing: .06em; color: #33206e; background: rgba(255,255,255,.88); }
 .inv-open { display: inline-block; margin-top: 20px; padding: 14px 20px; border-radius: 22px; font-size: 15px; line-height: 1.6; background: rgba(255,255,255,.12); border: 1px solid rgba(255,255,255,.22); word-break: keep-all; }
 .inv-open b { font-family: "Jua", sans-serif; font-weight: 400; font-size: 17px; color: #ffe9a8; }
+
+/* ── 초대장: 담당자 초대장(2026-09-22) 서체·표지 반영 ──
+   수성구 전용서체(수성돋움·수성바탕, 수성구청 무료 배포)를 웹폰트로 씀. 파일이 없으면 Jua/고운바탕으로 대체 */
+@font-face { font-family: "SuseongDotum"; src: url(/fonts/SuseongDotum.woff2) format("woff2"), url(/fonts/SuseongDotum.woff) format("woff"); font-weight: 400; font-display: swap; }
+@font-face { font-family: "SuseongBatang"; src: url(/fonts/SuseongBatang.woff2) format("woff2"), url(/fonts/SuseongBatang.woff) format("woff"); font-weight: 400; font-display: swap; }
+.inv { font-family: "SuseongBatang", "Gowun Batang", "Pretendard", serif; }
+.inv h1, .inv h2, .inv-hello, .inv-badge, .inv-btn, .inv-line b, .inv-info b, .inv-stats b, .inv-orgs b, .inv-orgs i, .inv-contacts b, .inv-place, .inv-open b, .inv-links b, .inv-links .inv-btn { font-family: "SuseongDotum", "Jua", "Pretendard", sans-serif; font-weight: 400; }
+.inv-lead, .inv-greet, .inv-from, .inv-thanks, .inv-note, .inv-concept, .inv-line span, .inv-info span, .inv-orgs span, .inv-links span, .inv-foot { font-family: "SuseongBatang", "Gowun Batang", serif; }
+.inv-cover { height: auto; min-height: 100svh; padding-top: 44svh; }
+.inv-float { top: 8% !important; }
+.inv-float.f1 { top: 10% !important; } .inv-float.f3 { top: 15% !important; }
+.inv-badge { letter-spacing: .34em; padding-left: 20px; }
+.inv-hello { font-size: clamp(34px, 10.5vw, 52px); letter-spacing: .32em; margin-left: .32em; margin-top: 14px; }
+.inv h1 { white-space: pre-line; font-size: clamp(22px, 6.4vw, 30px); line-height: 1.35; margin-top: 10px; word-break: keep-all; }
+.inv-concept { margin-top: 16px; display: grid; gap: 4px; }
+.inv-concept b { font-family: "SuseongBatang", "Gowun Batang", serif; font-weight: 400; font-size: clamp(24px, 7.5vw, 34px); letter-spacing: .3em; margin-left: .3em; color: #ffe9a8; line-height: 1.2; }
+.inv-concept span { font-size: 14px; line-height: 1.6; opacity: .92; word-break: keep-all; }
+.inv-lead { margin-top: 18px; font-size: clamp(15px, 4.2vw, 18px); }
+.inv-when { font-size: 14px; }
+.inv-greet { font-size: 15.5px; line-height: 1.95; }
+.inv-greet p { word-break: keep-all; }
+.inv-links { display: grid; gap: 10px; margin-top: 22px; text-align: left; }
+.inv-links > div { padding: 16px 18px; border-radius: 20px; background: rgba(255,255,255,.12); border: 1px solid rgba(255,255,255,.22); }
+.inv-links b { display: block; font-size: 17px; }
+.inv-links span { display: block; margin-top: 4px; font-size: 14px; line-height: 1.55; opacity: .9; word-break: keep-all; }
+.inv-links .inv-btn { margin-top: 12px; padding: 12px; font-size: 16px; }
+.inv-note small { font-size: 12px; opacity: .8; }
+.inv-contacts span { word-break: keep-all; }

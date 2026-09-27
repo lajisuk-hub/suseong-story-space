@@ -40,7 +40,7 @@ export default function Invite() {
   const share = async () => {
     const url = window.location.href;
     try {
-      if (navigator.share) await navigator.share({ title: INVITE.title, text: "초대합니다 ✨", url });
+      if (navigator.share) await navigator.share({ title: INVITE.title.replace(/\n/g, " "), text: "초대합니다 ✨", url });
       else {
         await navigator.clipboard.writeText(url);
         say("초대장 주소를 복사했어요");
@@ -67,10 +67,17 @@ export default function Invite() {
         <div className="inv-cover-text">
           <span className="inv-badge">INVITATION</span>
           <p className="inv-hello">초대합니다</p>
-          <h1>{INVITE.title.replace(" 성과보고", "\n성과보고")}</h1>
+          <h1>{INVITE.title}</h1>
           {INVITE.sub && <p className="inv-sub">{INVITE.sub}</p>}
+          {INVITE.concept && (
+            <div className="inv-concept">
+              <b>{INVITE.concept.word}</b>
+              <span>{INVITE.concept.ko}</span>
+              <span>{INVITE.concept.line}</span>
+            </div>
+          )}
           <p className="inv-lead">{INVITE.lead}</p>
-          <p className="inv-when">{INVITE.date}<br />{INVITE.time} · {INVITE.place}</p>
+          <p className="inv-when">{INVITE.date}&ensp;{INVITE.time}<br />{INVITE.note && <>{INVITE.note} · </>}{INVITE.place}</p>
         </div>
         <div className="inv-scroll">아래로 내려 보세요<i>⌄</i></div>
       </section>
@@ -92,7 +99,7 @@ export default function Invite() {
         <div className="inv-info rise">
           <div><i>📅</i><b>일시</b><span>{INVITE.date}<br />{INVITE.time}{INVITE.note && <><br /><small>※ {INVITE.note}</small></>}</span></div>
           <div><i>📍</i><b>장소</b><span>{INVITE.place}<br /><small>{INVITE.address}</small></span></div>
-          <div><i>💜</i><b>모시는 분</b><span>{INVITE.target}</span></div>
+          {INVITE.target && <div><i>💜</i><b>모시는 분</b><span>{INVITE.target}</span></div>}
         </div>
       </section>
 
@@ -137,8 +144,8 @@ export default function Invite() {
       {/* 4-2. 함께한 어린이집 */}
       {INVITE.participants?.length > 0 && (
         <section className="inv-sec">
-          <h2 className="rise">함께한 {INVITE.participants.length}개 어린이집</h2>
-          <p className="inv-note rise">어린이집마다 AI 동화책 한 권과 AI 동요 한 곡을 만들었어요. (가나다순)</p>
+          <h2 className="rise">AI 선도기관 어린이집</h2>
+          <p className="inv-note rise">{INVITE.participants.length}개 어린이집이 AI 그림책 한 권과 AI 동요 한 곡씩 만들었습니다.<br /><small>*지도교수: 라지숙(영유아교육디자인연구소 대표)</small></p>
           <ol className="inv-orgs">
             {INVITE.participants.map((p, i) => (
               <li key={i} className="rise">
@@ -154,15 +161,29 @@ export default function Invite() {
         </section>
       )}
 
-      {/* 5. 전시 미리 보기 (영상) — 전시관은 행사 당일에 연다 */}
+      {/* 5. 미리 만나보기 — 예시 영상 + 담당자 초대장의 미리보기 3종 */}
       <section className="inv-sec">
-        <h2 className="rise">동화책 우주 전시관,{"\n"}이렇게 열려요</h2>
-        <p className="inv-note rise">AI와 함께 만든 동화책이 우주에 둥둥 떠다니고,<br />책을 누르면 펼쳐져 한 장씩 읽을 수 있어요.</p>
+        <h2 className="rise">미리 만나보기</h2>
+        <p className="inv-note rise">AI 아나카이브 스페이스(ONLINE 갤러리)에서는<br />AI 그림책이 우주에 떠다니고, 책을 누르면 펼쳐집니다.</p>
         <div className="inv-video rise">
           <video src="/preview.mp4" poster="/preview-poster.jpg" autoPlay muted loop playsInline preload="metadata" />
           <span>예시 화면</span>
         </div>
-        <p className="inv-open rise">🚀 우주 전시관은 행사 당일<br /><b>{INVITE.date}</b>에 문을 열어요</p>
+        {INVITE.links?.length > 0 && (
+          <div className="inv-links">
+            {INVITE.links.map((l, i) => (
+              <div key={i} className="rise">
+                <b>· {l.label}</b>
+                <span>{l.desc}</span>
+                {l.url && (
+                  <a className="inv-btn main" href={l.url} target={l.url.startsWith("http") ? "_blank" : undefined} rel="noopener noreferrer">
+                    {l.label} →
+                  </a>
+                )}
+              </div>
+            ))}
+          </div>
+        )}
       </section>
 
       {/* 6. 오시는 길 */}

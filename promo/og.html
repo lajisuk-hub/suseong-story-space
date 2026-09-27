@@ -12,7 +12,15 @@
   .hello { font-size: 96px; line-height: 1.1; color: #ffe08a; text-shadow: 0 4px 24px rgba(40,10,110,.9); }
   h1 { font-weight: 400; font-size: 46px; white-space: nowrap; line-height: 1.2; margin-top: 18px; text-shadow: 0 4px 24px rgba(40,10,110,.9); word-break: keep-all; }
   p { font-family: "Gowun Batang", serif; font-size: 26px; white-space: nowrap; line-height: 1.5; margin-top: 20px; color: #fff3c4; }
-  p.when { font-family: "Jua", sans-serif; font-size: 28px; color: #fff; margin-top: 22px; padding-top: 18px; border-top: 2px solid rgba(255,255,255,.35); display: inline-block; }
+  @font-face { font-family: "SuseongDotum"; src: url(../public/fonts/SuseongDotum.woff2) format("woff2"); }
+  @font-face { font-family: "SuseongBatang"; src: url(../public/fonts/SuseongBatang.woff2) format("woff2"); }
+  body, h1, .hello, .badge { font-family: "SuseongDotum", "Jua", sans-serif; }
+  p { font-family: "SuseongBatang", "Gowun Batang", serif; }
+  .hello { font-size: 72px; letter-spacing: .1em; }
+  h1 { font-size: 40px; }
+  p.anar { font-size: 34px; letter-spacing: .3em; color: #ffe9a8; margin-top: 14px; }
+  p.when small { font-size: 22px; opacity: .85; }
+  p.when { font-family: "SuseongDotum", "Jua", sans-serif; font-size: 28px; color: #fff; margin-top: 22px; padding-top: 18px; border-top: 2px solid rgba(255,255,255,.35); display: inline-block; }
   img { position: absolute; border-radius: 5px 12px 12px 5px; box-shadow: 0 0 0 3px rgba(255,255,255,.85), 0 0 36px 8px rgba(255,236,170,.85), 0 0 80px 16px rgba(190,140,255,.6); }
 </style>
 </head>
@@ -21,10 +29,11 @@
   <img src="../public/books/palace2/p01.jpg" style="width:190px; right:70px; top:70px; transform:rotate(7deg)">
   <img src="../public/books/palace2/p07.jpg" style="width:150px; right:300px; bottom:60px; transform:rotate(-6deg)">
   <div class="txt">
-    <div class="hello">💌 초대합니다</div>
-    <h1>수성구 AI 영유아 선도기관<br>성과보고 발표회</h1>
-    <p>수성구 영유아를 위한 단 한 권의 동화책!<br>그 준비과정과 성장과정을 마음 담아 전달합니다</p>
-    <p class="when">2026. 10. 13.(화) 오후 4시 · 수성구청 지하 대강당</p>
+    <div class="hello">초 대 합 니 다</div>
+    <h1>『2026 AI 미래성장아카데미』<br>보육을 디자인하다 성과보고회</h1>
+    <p class="anar">A N A R C H I V E</p>
+    <p>AI로 앞서가는 보육의 미래, 그 성과를 전합니다</p>
+    <p class="when">2026. 10. 13.(화) 오후 4시 · 수성구청 지하 대강당<br><small>15:30부터 사전 관람 가능</small></p>
   </div>
 </body>
 </html>

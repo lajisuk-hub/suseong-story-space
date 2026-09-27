@@ -131,7 +131,7 @@ export default function Admin() {
   const saveInv = async () => {
     setBusy("inv");
     try {
-      const { title, sub, lead, about, participants, ...rest } = inv; // 제목·표지 문구·걸어온 길·참여 기관은 코드 기본값을 따른다
+      const { title, sub, lead, concept, about, participants, links, ...rest } = inv; // 제목·표지 문구·걸어온 길·참여 기관은 코드 기본값을 따른다
       await saveInvite({ ...rest, contacts: inv.contacts.filter((c) => c.name.trim() || c.phone.trim()) });
       setMsg("초대장을 저장했어요 ✅");
     } catch (e) {
