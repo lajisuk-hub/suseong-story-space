@@ -353,3 +353,4 @@ button { font: inherit; color: inherit; border: 0; background: none; cursor: poi
 .inv-contacts.compact > div.phone-only a { font-size: 16px; padding: 10px 18px; }
 .ddubi-say.hint { font-size: 13px; padding: 7px 12px; max-width: 170px; }
 @media (max-width: 700px) { .ddubi-say.hint { font-size: 12px; } }
+.inv-orgs b { font-size: 15px; word-break: keep-all; }
