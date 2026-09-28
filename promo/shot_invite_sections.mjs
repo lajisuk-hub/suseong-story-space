@@ -1,0 +1,28 @@
+import { spawn } from "node:child_process";
+import fs from "node:fs";
+const url = process.argv[2], out = process.argv[3], port = 9336;
+const chrome = spawn("C:/Program Files/Google/Chrome/Application/chrome.exe",
+  ["--headless=new","--disable-gpu","--hide-scrollbars",`--remote-debugging-port=${port}`,"--user-data-dir="+process.env.TEMP+"/cdp-prof4","--window-size=375,812","about:blank"],{stdio:"ignore"});
+const die=(c)=>{try{chrome.kill()}catch{}; process.exit(c)};
+setTimeout(()=>{console.log("timeout");die(2)},90000);
+await new Promise(r=>setTimeout(r,2500));
+const list = await (await fetch(`http://127.0.0.1:${port}/json`)).json();
+const ws = new WebSocket(list.find(t=>t.type==="page").webSocketDebuggerUrl);
+let id=0; const pend={};
+ws.onmessage=(e)=>{const m=JSON.parse(e.data); if(m.id&&pend[m.id]){pend[m.id](m);delete pend[m.id];}};
+const send=(method,params={})=>new Promise(r=>{const i=++id;pend[i]=r;ws.send(JSON.stringify({id:i,method,params}));});
+await new Promise(r=>ws.onopen=r);
+await send("Emulation.setDeviceMetricsOverride",{width:375,height:812,deviceScaleFactor:2,mobile:true});
+await send("Page.navigate",{url});
+await new Promise(r=>setTimeout(r,9000));
+await send("Runtime.evaluate",{expression:"(()=>{const s=document.createElement('style');s.textContent='.inv-cover{height:812px!important;min-height:0!important;padding-top:357px!important}.ddubi{display:none!important}.rise{transition:none!important}.inv-scroll{display:none!important}';document.head.appendChild(s);document.querySelectorAll('.rise').forEach(e=>e.classList.add('in'));return 1})()"});
+await new Promise(r=>setTimeout(r,1000));
+const r1=await send("Runtime.evaluate",{expression:"document.documentElement.scrollHeight"});
+const h=r1.result.result.value; console.log("height",h);
+await send("Emulation.setDeviceMetricsOverride",{width:375,height:h,deviceScaleFactor:2,mobile:true});
+await new Promise(r=>setTimeout(r,1500));
+const secs=await send("Runtime.evaluate",{expression:"JSON.stringify([...document.querySelectorAll('.inv-cover,.inv-sec,.inv-foot')].map(e=>({top:e.offsetTop,h:e.offsetHeight,label:(e.querySelector('h2')||e.querySelector('.inv-eyebrow')||{}).textContent||(e.className.includes('cover')?'표지':'맺음')})))",returnByValue:true});
+fs.writeFileSync(out+".sections.json", secs.result.result.value);
+const shot=await send("Page.captureScreenshot",{format:"jpeg",quality:92});
+fs.writeFileSync(out,Buffer.from(shot.result.data,"base64")); console.log("saved");
+ws.close(); die(0);
