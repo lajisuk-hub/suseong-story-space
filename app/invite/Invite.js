@@ -198,7 +198,29 @@ export default function Invite() {
         </div>
       </section>
 
-      {/* 7. 관련 문의 */}
+      {/* 7. 신청방법 (링크·전화번호는 누르면 바로 연결) */}
+      {INVITE.apply?.items?.length > 0 && (
+        <section className="inv-sec">
+          <h2 className="rise">{INVITE.apply.title}</h2>
+          {INVITE.apply.sub && <p className="inv-note rise">{INVITE.apply.sub}</p>}
+          <div className="inv-links inv-apply">
+            {INVITE.apply.items.map((a, i) => (
+              <div key={i} className="rise">
+                <b>{a.label}</b>
+                {a.url && (
+                  <>
+                    <a className="inv-url" href={a.url} target="_blank" rel="noopener noreferrer">{a.url}</a>
+                    <a className="inv-btn main" href={a.url} target="_blank" rel="noopener noreferrer">{a.btn || "신청하러 가기"} →</a>
+                  </>
+                )}
+                {a.phone && <a className="inv-btn tel" href={`tel:${a.phone.replace(/[^0-9+]/g, "")}`}>☎ {a.phone}</a>}
+              </div>
+            ))}
+          </div>
+        </section>
+      )}
+
+      {/* 7-1. 관련 문의 (contacts가 비어 있으면 안 보임) */}
       {INVITE.contacts?.length > 0 && (
         <section className="inv-sec">
           <h2 className="rise">관련 문의</h2>
