@@ -10,6 +10,7 @@ import Ddubi from "../Ddubi";
 export default function Invite() {
   const [books, setBooks] = useState(DEFAULT_BOOKS);
   const [toast, setToast] = useState("");
+  const [openOrgs, setOpenOrgs] = useState(false); // AI 선도기관 어린이집 명단 펼침 여부
   const [INVITE, setInvite] = useState(null); // 관리 화면에서 저장한 내용을 받아 온 뒤에 그린다
   const root = useRef(null);
 
@@ -134,27 +135,7 @@ export default function Invite() {
         </section>
       )}
 
-      {/* 4-2. 함께한 어린이집 */}
-      {INVITE.participants?.length > 0 && (
-        <section className="inv-sec">
-          <h2 className="rise">AI 선도기관 어린이집</h2>
-          <p className="inv-note rise">{INVITE.participantsIntro}{INVITE.participantsNote && <><br /><small>{INVITE.participantsNote}</small></>}</p>
-          <ol className="inv-orgs">
-            {INVITE.participants.map((p, i) => (
-              <li key={i} className="rise">
-                <i>{i + 1}</i>
-                <div>
-                  <b>{p.org}</b>
-                  <span>📖 {p.book}</span>
-                  {p.song && <span>🎵 {p.song}</span>}
-                </div>
-              </li>
-            ))}
-          </ol>
-        </section>
-      )}
-
-      {/* 5. 미리 만나보기 — 예시 영상 + 담당자 초대장의 미리보기 3종 */}
+      {/* 5. 미리 만나보기(은하수) — 어린이집 명단보다 먼저 나온다 (2026-10-02 원장님 지시) — 예시 영상 + 담당자 초대장의 미리보기 3종 */}
       <section className="inv-sec">
         <h2 className="rise">{INVITE.previewTitle}</h2>
         <p className="inv-note rise">{INVITE.previewText}</p>
@@ -180,6 +161,31 @@ export default function Invite() {
           </div>
         )}
       </section>
+
+      {/* 5-1. AI 선도기관 어린이집 — 명단은 접어 두고 「펼치기」를 누르면 열린다 */}
+      {INVITE.participants?.length > 0 && (
+        <section className="inv-sec">
+          <h2 className="rise">AI 선도기관 어린이집</h2>
+          <p className="inv-note rise">{INVITE.participantsIntro}{INVITE.participantsNote && <><br /><small>{INVITE.participantsNote}</small></>}</p>
+          <button className="inv-toggle rise" onClick={() => setOpenOrgs((v) => !v)} aria-expanded={openOrgs}>
+            {openOrgs ? "접기 ▴" : "펼치기 ▾"}
+          </button>
+          {openOrgs && (
+            <ol className="inv-orgs">
+              {INVITE.participants.map((p, i) => (
+                <li key={i}>
+                  <i>{i + 1}</i>
+                  <div>
+                    <b>{p.org}</b>
+                    <span>📖 {p.book}</span>
+                    {p.song && <span>🎵 {p.song}</span>}
+                  </div>
+                </li>
+              ))}
+            </ol>
+          )}
+        </section>
+      )}
 
       {/* 6. 오시는 길 */}
       <section className="inv-sec">

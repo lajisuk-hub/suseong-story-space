@@ -359,3 +359,6 @@ button { font: inherit; color: inherit; border: 0; background: none; cursor: poi
 .inv-url { display: block; margin-top: 6px; font-family: "Pretendard", sans-serif; font-size: 14px; color: #ffe9a8; text-decoration: underline; text-underline-offset: 3px; word-break: break-all; }
 .inv-links .inv-btn.tel { background: rgba(255,255,255,.93); color: #33206e; font-size: 18px; letter-spacing: .02em; }
 .inv-apply b { font-size: 16px; word-break: keep-all; }
+/* 어린이집 명단 펼치기 단추 (2026-10-02) */
+.inv-toggle { display: inline-block; margin-top: 16px; padding: 12px 34px; border-radius: 999px; font-family: "SuseongDotum", "Jua", sans-serif; font-size: 17px; color: #33206e; background: linear-gradient(135deg, #ffe9a8, #ffd0f0); box-shadow: 0 8px 20px rgba(15,4,60,.35); }
+.inv-toggle + .inv-orgs { animation: coverIn .5s ease both; }
