@@ -166,7 +166,7 @@ export default function Invite() {
       {INVITE.participants?.length > 0 && (
         <section className="inv-sec">
           <h2 className="rise">AI 선도기관 어린이집</h2>
-          <p className="inv-note rise">{INVITE.participantsIntro}{INVITE.participantsNote && <><br /><small>{INVITE.participantsNote}</small></>}</p>
+          <p className="inv-note inv-orgs-intro rise">{INVITE.participantsIntro}{INVITE.participantsNote && <><br /><small>{INVITE.participantsNote}</small></>}</p>
           <button className="inv-toggle rise" onClick={() => setOpenOrgs((v) => !v)} aria-expanded={openOrgs}>
             {openOrgs ? "접기 ▴" : "펼치기 ▾"}
           </button>
