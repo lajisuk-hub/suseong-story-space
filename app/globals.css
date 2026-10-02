@@ -365,3 +365,4 @@ button { font: inherit; color: inherit; border: 0; background: none; cursor: poi
 /* 어린이집 소개 글·지도교수 줄 글씨 키움 (2026-10-02) */
 .inv-orgs-intro { font-size: 16.5px; line-height: 1.75; word-break: keep-all; }
 .inv-orgs-intro small { display: inline-block; margin-top: 8px; font-size: 15px; opacity: .92; color: #ffe9a8; }
+.inv-orgs-intro { text-wrap: balance; }
