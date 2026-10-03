@@ -124,6 +124,8 @@ button { font: inherit; color: inherit; border: 0; background: none; cursor: poi
 .v-pages img { display: block; max-height: 100%; max-width: 100%; object-fit: contain; border-radius: 6px; background: #fff; box-shadow: 0 20px 60px rgba(0,0,0,.55); }
 .v-pages.spread img { max-width: 50%; border-radius: 6px 0 0 6px; }
 .v-pages.spread img + img { border-radius: 0 6px 6px 0; box-shadow: 0 20px 60px rgba(0,0,0,.55), inset 14px 0 18px -12px rgba(0,0,0,.35); }
+.v-pages.wide-page img { max-width: 100%; }
+.v-hint { font-style: normal; font-size: 12px; opacity: .75; }
 .v-pages.next { animation: turnNext .45s ease; }
 .v-pages.prev { animation: turnPrev .45s ease; }
 @keyframes turnNext { from { opacity: 0; transform: translateX(7%) rotateY(-28deg); } }

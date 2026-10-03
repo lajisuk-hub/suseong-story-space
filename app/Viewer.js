@@ -18,13 +18,13 @@ export default function Viewer({ book, canReview, onClose }) {
     return () => window.removeEventListener("resize", on);
   }, []);
 
-  // 넓은 화면은 두 쪽씩 펼쳐 보기(표지는 한 쪽)
+  // 넓은 화면은 두 쪽씩 펼쳐 보기(표지는 한 쪽). 쪽 그림이 이미 두 쪽 펼침인 책(spread)은 늘 한 장씩
   const views = useMemo(() => {
-    if (!wide || pages.length < 3) return pages.map((_, i) => [i]);
+    if (!wide || pages.length < 3 || book.spread) return pages.map((_, i) => [i]);
     const v = [[0]];
     for (let i = 1; i < pages.length; i += 2) v.push(i + 1 < pages.length ? [i, i + 1] : [i]);
     return v;
-  }, [wide, pages]);
+  }, [wide, pages, book.spread]);
 
   const cur = Math.min(idx, views.length - 1);
   const last = cur === views.length - 1;
@@ -94,7 +94,7 @@ export default function Viewer({ book, canReview, onClose }) {
         <button className="v-zone left" onClick={() => go(-1)} aria-label="이전 쪽" disabled={cur === 0}>
           <i>‹</i>
         </button>
-        <div key={`${cur}-${wide}`} className={`v-pages ${dir}${views[cur].length === 2 ? " spread" : ""}`}>
+        <div key={`${cur}-${wide}`} className={`v-pages ${dir}${views[cur].length === 2 ? " spread" : ""}${book.spread ? " wide-page" : ""}`}>
           {views[cur].map((i) => (
             <img key={i} src={pages[i]} alt={`${i + 1}쪽`} draggable={false} />
           ))}
@@ -107,6 +107,7 @@ export default function Viewer({ book, canReview, onClose }) {
       <div className="v-foot">
         <div className="v-bar"><b style={{ width: `${((cur + 1) / views.length) * 100}%` }} /></div>
         <span>{views[cur].map((i) => i + 1).join("–")} / {pages.length}</span>
+        {book.spread && !wide && <em className="v-hint">📱 휴대폰을 가로로 돌리면 더 크게 보여요</em>}
         {last && canReview && (
           <button className="btn-main" onClick={() => onClose(true)}>다 봤어요! 소감 남기기 ✍</button>
         )}

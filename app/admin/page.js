@@ -169,6 +169,10 @@ export default function Admin() {
                 <button className="b" onClick={() => move(i, 1)} disabled={i === books.length - 1}>▼</button>
                 <button className="b danger" onClick={() => confirm(`「${b.title}」을(를) 목록에서 뺄까요?`) && setBooks((p) => p.filter((x) => x.id !== b.id))}>빼기</button>
               </div>
+              <label className="row" style={{ fontSize: 13, alignItems: "center", gap: 6 }}>
+                <input type="checkbox" checked={!!b.spread} onChange={(e) => edit(b.id, { spread: e.target.checked })} style={{ width: "auto" }} />
+                쪽 그림이 가로로 긴 두 쪽 펼침형이에요 (큰 화면에서도 한 장씩 보여 줌)
+              </label>
               {!b.pages?.length && (
                 <label>PDF가 없으면 전자책 주소(새 창으로 열림)
                   <input type="url" value={b.link || ""} placeholder="https://" onChange={(e) => edit(b.id, { link: e.target.value.trim() })} />
