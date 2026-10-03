@@ -28,6 +28,7 @@ export default function Space({ show = false }) {
   const pulseRef = useRef(new Set()); // 이미 떠 있는데 +1 된 글자
   const wordEls = useRef(new Map());
   const bookEls = useRef(new Map());
+  const [ratios, setRatios] = useState({}); // 책 id → 표지 가로/세로 비율
   const motion = useRef(new Map());
   const worldRef = useRef(null);
   const thumbRef = useRef(null);
@@ -423,12 +424,21 @@ export default function Space({ show = false }) {
           key={b.id}
           ref={(el) => (el ? bookEls.current.set(b.id, el) : bookEls.current.delete(b.id))}
           className="book"
-          style={{ width: bw }}
+          style={{ width: bw * ((ratios[b.id] || 0) > 1 ? 1.3 : 1) }}
           onClick={() => setOpenBook(b)}
           aria-label={`${b.title} 열기`}
         >
-          <span className="book-body">
-            <img src={b.cover} alt="" draggable={false} />
+          {/* 표지가 가로로 긴 책은 그 비율대로(잘리지 않게) 조금 넓게 보여 준다 */}
+          <span className="book-body" style={{ aspectRatio: ratios[b.id] || 3 / 4 }}>
+            <img
+              src={b.cover}
+              alt=""
+              draggable={false}
+              onLoad={(e) => {
+                const { naturalWidth: nw, naturalHeight: nh } = e.currentTarget;
+                if (nw && nh) setRatios((prev) => ({ ...prev, [b.id]: Math.min(1.45, Math.max(0.7, nw / nh)) }));
+              }}
+            />
           </span>
           {books.length <= 14 && <span className="book-title">{b.title}</span>}
         </button>
