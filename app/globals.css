@@ -370,9 +370,13 @@ button { font: inherit; color: inherit; border: 0; background: none; cursor: poi
 .inv-orgs-intro small { display: inline-block; margin-top: 8px; font-size: 15px; opacity: .92; color: #ffe9a8; }
 .inv-orgs-intro { text-wrap: balance; }
 
-/* ── 배경음악 단추 (왼쪽 위) ─────────────── */
-.music { position: absolute; top: max(16px, env(safe-area-inset-top)); left: 10px; z-index: 46; width: 44px; height: 44px; border-radius: 50%;
-  font-size: 20px; line-height: 1; background: rgba(255,255,255,.16); border: 1px solid rgba(255,255,255,.35); color: #fff; backdrop-filter: blur(4px); opacity: .75; }
-.music.on { opacity: 1; animation: musicGlow 3s ease-in-out infinite; }
-@keyframes musicGlow { 50% { box-shadow: 0 0 18px rgba(255,215,106,.55); } }
-.space.show .music { opacity: .35; }
+/* ── 배경음악 단추 (왼쪽 화살표 바로 아래) ─────────────── */
+.music { position: absolute; top: 50%; margin-top: 34px; left: 8px; z-index: 46; padding: 8px 13px; border-radius: 999px;
+  font-size: 14px; font-weight: 700; white-space: nowrap; background: rgba(255,255,255,.9); color: #4b2aa8; border: 0;
+  box-shadow: 0 4px 16px rgba(30,10,90,.4); }
+.music.on { background: rgba(75,42,168,.85); color: #fff; animation: musicGlow 3s ease-in-out infinite; }
+@keyframes musicGlow { 50% { box-shadow: 0 0 20px rgba(255,215,106,.7); } }
+.space.show .music { margin-top: 0; left: 1.6vw; font-size: clamp(14px, 1vw, 20px); }
+.music-credit { position: absolute; top: 50%; margin-top: 76px; left: 10px; z-index: 46; max-width: 150px; font-size: 10px; line-height: 1.35;
+  color: rgba(255,255,255,.8); text-shadow: 0 1px 3px rgba(0,0,0,.6); pointer-events: none; }
+.space.show .music-credit { margin-top: 44px; left: 1.6vw; max-width: 260px; font-size: 12px; }
