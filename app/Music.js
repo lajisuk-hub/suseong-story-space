@@ -1,9 +1,9 @@
 "use client";
 import { useEffect, useRef, useState } from "react";
 
-// 잔잔한 피아노 배경음악 (모두 저작권이 끝난 곡·연주 — 위키미디어 공용, 퍼블릭 도메인)
+// 잔잔한 피아노 왈츠 배경음악 (쇼팽 왈츠 3곡, 올가 구레비치 연주 — 위키미디어 공용, 퍼블릭 도메인)
 // 여러 곡이면 차례로 이어서 틀고, 끝나면 처음부터 다시.
-const TRACKS = ["/music/satie.mp3", "/music/debussy.mp3", "/music/chopin.mp3"];
+const TRACKS = ["/music/waltz1.mp3", "/music/waltz2.mp3", "/music/waltz3.mp3"];
 const VOLUME = 0.45;
 
 // 브라우저는 화면을 한 번 누르기 전엔 소리를 막는다 → 첫 터치/클릭 때 살며시 시작.
