@@ -5,6 +5,7 @@ import QRCode from "qrcode";
 import { DEFAULT_BOOKS, SITE } from "../data/books";
 import { loadBooks, loadReviews, addReview } from "../lib/supabase";
 import { groupReviews, keyOf } from "../lib/words";
+import Music from "./Music";
 import Viewer from "./Viewer";
 import ReviewForm from "./ReviewForm";
 
@@ -446,6 +447,8 @@ export default function Space({ show = false }) {
       </div>
 
       <canvas className="stars" ref={starRef} />
+
+      <Music />
 
       <header className="top" ref={headRef}>
         <h1>{SITE.title}</h1>

@@ -369,3 +369,10 @@ button { font: inherit; color: inherit; border: 0; background: none; cursor: poi
 .inv-orgs-intro { font-size: 16.5px; line-height: 1.75; word-break: keep-all; }
 .inv-orgs-intro small { display: inline-block; margin-top: 8px; font-size: 15px; opacity: .92; color: #ffe9a8; }
 .inv-orgs-intro { text-wrap: balance; }
+
+/* ── 배경음악 단추 (왼쪽 위) ─────────────── */
+.music { position: absolute; top: max(16px, env(safe-area-inset-top)); left: 10px; z-index: 46; width: 44px; height: 44px; border-radius: 50%;
+  font-size: 20px; line-height: 1; background: rgba(255,255,255,.16); border: 1px solid rgba(255,255,255,.35); color: #fff; backdrop-filter: blur(4px); opacity: .75; }
+.music.on { opacity: 1; animation: musicGlow 3s ease-in-out infinite; }
+@keyframes musicGlow { 50% { box-shadow: 0 0 18px rgba(255,215,106,.55); } }
+.space.show .music { opacity: .35; }
