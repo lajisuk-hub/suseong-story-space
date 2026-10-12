@@ -97,10 +97,9 @@ export default function Space({ show = false }) {
     };
   }, [merge, show]);
 
-  // ── 큰 화면용 QR ──
+  // ── QR (큰 화면용 + 참여자 화면 안내 문구 위) — 늘 라이브 주소로 ──
   useEffect(() => {
-    if (!show) return;
-    QRCode.toDataURL(window.location.origin, { width: 480, margin: 1, color: { dark: "#2a1a5e", light: "#ffffff" } })
+    QRCode.toDataURL("https://suseong-story-space.vercel.app/", { width: 480, margin: 1, color: { dark: "#2a1a5e", light: "#ffffff" } })
       .then(setQr)
       .catch(() => {});
   }, [show]);
@@ -462,6 +461,7 @@ export default function Space({ show = false }) {
       )}
       {!show && (
         <footer className="bottom">
+          {qr && <img className="qr-mini" src={qr} alt="전시관 QR" />}
           <p className="guide">👆 {SITE.guide}</p>
           <button className="btn-write" onClick={() => setForm({ book: null })}>✍ 소감 한마디 띄우기</button>
           <p className="count">지금까지 떠오른 소감 {total}개</p>

@@ -53,6 +53,7 @@ button { font: inherit; color: inherit; border: 0; background: none; cursor: poi
 .bottom { position: absolute; left: 0; right: 0; bottom: max(14px, env(safe-area-inset-bottom)); z-index: 40; text-align: center; display: flex; flex-direction: column; align-items: center; gap: 8px; pointer-events: none; }
 .bottom > * { pointer-events: auto; }
 .guide { font-size: clamp(14px, 1.5vw, 19px); color: #4a2f96; background: rgba(255,255,255,.82); padding: 6px 16px; border-radius: 999px; animation: bob 2.6s ease-in-out infinite; }
+.qr-mini { width: clamp(78px, 8vw, 120px); height: clamp(78px, 8vw, 120px); padding: 5px; background: #fff; border-radius: 10px; box-shadow: 0 6px 18px rgba(40,10,100,.45); display: block; }
 @keyframes bob { 50% { transform: translateY(-5px); } }
 .btn-write { font-size: clamp(16px, 1.6vw, 21px); padding: 12px 26px; border-radius: 999px; color: #fff;
   background: linear-gradient(135deg, #8a5cf6, #ec6fc1); box-shadow: 0 8px 24px rgba(90,40,180,.55), inset 0 1px 0 rgba(255,255,255,.4); }
